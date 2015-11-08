@@ -1,0 +1,276 @@
+*{
+	box-sizing: border-box;
+}
+
+body {
+	background: #eee;
+	padding: 0;
+	margin: 0;
+	font: normal 1em/1.4 'Helvetica Neue', sans-serif;
+	color: #444;
+}
+
+.main-nav {
+	max-width: 800px;
+	margin: 0 auto 2em;
+	border-bottom: 1px dotted #ddd;
+	padding: 1em 0;
+}
+
+.main-nav a {
+	float: right;
+	text-decoration: none;
+	color: #ccc;
+	margin: 0.5em 0;
+}
+
+.form-wrap {
+	max-width: 800px;
+	margin: 1em auto;
+}
+
+.row {
+	width: 100%;
+	margin: 0 0 1.5em;
+	overflow: hidden;
+}
+
+.row.split .group {
+	float: left;
+	width: 49%;
+	margin-left: 2%;
+}
+
+.row.split .group:first-child {
+	margin-left: 0;
+}
+
+label {
+	display: block;
+	margin: 0 0 5px 0;
+	font: 400 1.25em/1.4 'Vollkorn';
+	font-style: italic;
+	color: #bbb;
+}
+
+input[type="text"],
+textarea {
+	width: 100%;
+	background: #fff;
+	box-shadow: none;
+	border: 0;
+	border-radius: 3px;
+	padding: 0.5em 1em;
+	margin: 0;
+	font: normal 1em/1.4 'Helvetica Neue', sans-serif;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+	background: #2e9adf;
+	color: #f6f6f6;
+}
+
+::-webkit-input-placeholder {
+   color: #acd6f6;
+}
+
+::-moz-placeholder {
+   color: #acd6f6;  
+}
+
+:-ms-input-placeholder {  
+   color: #acd6f6;  
+}
+
+input[type="submit"] {
+	border: 0;
+	border-radius: 3px;
+	padding: 0.5em 1em;
+	font: normal 1em/1.4 'Helvetica Neue', sans-serif;
+	background: #2e9adf;
+	color: #fff;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.fake-delete {
+	border: 0;
+	border-radius: 3px;
+	padding: 0.5em 1em;
+	font: normal 1em/1.4 'Helvetica Neue', sans-serif;
+	background: #2e9adf;
+	color: #fff;
+	-webkit-appearance: none;
+	appearance: none;
+	color: #f00;
+	background: transparent;
+	border: 1px solid #f00;
+	float: right;
+}
+
+.delete-wrap {
+	background: #eee;
+	position: absolute;
+	right: 0;
+	width: 300px;
+	top: 0;
+	display: none;
+	padding: 1em;
+}
+
+.delete-wrap .cancel {
+	color: #999;
+	display: inline-block;
+}
+
+input[type="submit"].delete {
+	display: inline-block;
+	color: #f00;
+	background: transparent;
+	border: 1px solid #f00;
+	margin: 0 1em;
+}
+
+
+.select-wrap {
+	position: relative;
+	display: inline-block;
+	border: 0;
+	background: #fff;
+	border-radius: 3px;
+	font-size: 1em;
+	height: 2.375em;
+}
+select {
+	-webkit-appearance: none;
+	border: 0;
+	padding: 0.5em 3em 0.5em 1em;
+	font-size: 1em;
+	width: 100%;
+	margin: 0;
+}
+.select-wrap:after,
+.select-wrap:before {
+	content: '';
+	position: absolute;
+	border-radius: 4px;
+	background: #ccc;
+	height: 3px;
+	width: 10px;
+	top: 17px;
+	right: 15px;
+	-webkit-transform: rotate(45deg);
+}
+.select-wrap:after {
+	-webkit-transform: rotate(-45deg);
+	right: 10px;
+}
+
+.row.submit {
+	margin: 2em 0;
+	padding-top: 1em;
+	border-top: 1px solid #ddd;
+	position: relative;
+}
+
+.two-inputs input {
+	width: 49%;
+	margin-left: 2%;
+	float: left;
+}
+.two-inputs input:first-child,
+.group .two-inputs input:first-child {
+	margin-left: 0;
+}
+
+.group .two-inputs input {
+	width: 48%;
+	margin-left: 4%;
+}
+
+.textarea-wrap textarea {
+    height: 40px;
+    min-height: 40px;
+    padding-right: 2em;
+    overflow-y: hidden;
+}
+
+.steps ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.steps ul li {
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+
+.steps ul li textarea {
+	border-radius: 0;
+	margin: 0;
+	display: block;
+	border-top: 1px solid #ddd;
+}
+
+.steps ul li:first-child textarea {
+	border-top: 0;
+	border-radius: 3px 3px 0 0;
+}
+
+.steps .delete {
+	cursor: pointer;
+	position: absolute;
+	right: 5px;
+	top: 2px;
+	font-size: 24px;
+	color: #ccc;
+}
+
+.steps .add {
+	cursor: pointer;
+	border: 1px solid #ddd;
+	border-radius: 0 0 3px 3px;
+	padding: 0.5em;
+	text-align: center;
+	width: 100%;
+	color: #2e9adf;
+}
+
+.ingredient {
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+.ingredient input {
+	width: 30%;
+	float: left;
+	margin-left: 2%;
+}
+.ingredient input:first-child {
+	width: 15%;
+	margin-left: 0;
+}
+.ingredient .select-wrap {
+	width: 15%;
+	margin-left: 2%;
+	float: left;
+}
+.ingredient .delete {
+	cursor: pointer;
+	float: left;
+	margin: 1px 0 0 10px;
+	font-size: 24px;
+	color: #ccc;
+}
+.add-ingredient {
+	color: #2e9adf;
+	border: 1px solid #ddd;
+	padding: 0.5em 1em;
+	border-radius: 3px;
+	text-align: center;
+	cursor: pointer;
+}

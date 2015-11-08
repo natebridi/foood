@@ -1,0 +1,436 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #2e9adf;
+}
+
+input[type="text"] {
+	background: #eee;
+	font: normal 16px/18px 'Hammersmith One';
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	padding: 1em;
+	border: 0;
+	color: #fff;
+	box-shadow: none;
+	margin: 0;
+	width: 100%;
+	text-align: center;
+	border-radius: 0;
+}
+::-webkit-input-placeholder {
+    color: #ccc;
+}
+::-moz-placeholder {
+    color: #ccc;  
+}
+:-ms-input-placeholder {  
+   color: #ccc;  
+}
+
+ul.controls {
+	width: 100%;
+	font: normal 16px/18px 'Hammersmith One';
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+}
+
+ul.controls li {
+	-webkit-flex: 1 30%;
+	text-align: center;
+	padding: 0;
+	background: #eee;
+	color: #ddd;
+	position: relative;
+}
+
+ul.controls li:first-child {
+	background: #fff;
+	padding: 1em 0;
+}
+ul.controls li:first-child i {
+	font-style: normal;
+	color: #a7c5bd;
+}
+ul.controls li:first-child i:nth-child(2) {
+	color: #e5ccdb;
+}
+ul.controls li:first-child i:nth-child(3) {
+	color: #eb7b59;
+}
+ul.controls li:first-child i:nth-child(4) {
+	color: #cf4647;
+}
+ul.controls li:first-child i:nth-child(5) {
+	color: #524656;
+}
+
+ul.controls li.active,
+ul.controls li.active input,
+input[type="text"]:focus,
+ul.controls li.active select {
+	background: #aaa;
+	outline: none;
+	color: #fff;
+}
+
+ul.controls .clear {
+	cursor: pointer;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	background: #cf4647;
+	height: 52px;
+	width: 52px;
+}
+ul.controls .clear:after,
+ul.controls .clear:before {
+	content: '';
+	position: absolute;
+	border-radius: 4px;
+	background: #fff;
+	height: 3px;
+	width: 15px;
+	top: 23px;
+	right: 18px;
+	-webkit-transform: rotate(45deg);
+}
+ul.controls .clear:after {
+	-webkit-transform: rotate(-45deg);
+}
+
+
+ul.controls .select-wrap {
+	position: relative;
+	display: inline-block;
+	padding: 1em 3em 1em 2em;
+}
+
+ul.controls .select-wrap select {
+	opacity: 0.01;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	-webkit-appearance: none;
+}
+
+ul.controls .select-wrap:after,
+ul.controls .select-wrap:before {
+	content: '';
+	position: absolute;
+	border-radius: 4px;
+	background: #ccc;
+	height: 3px;
+	width: 10px;
+	top: 22px;
+	right: 10px;
+	-webkit-transform: rotate(45deg);
+}
+ul.controls .select-wrap:after {
+	-webkit-transform: rotate(-45deg);
+	right: 5px;
+}
+
+ul.controls .select-wrap div.current {
+	color: #fff;
+}
+
+ul.controls .select-wrap div.none {
+	display: block;
+	color: #ccc;
+}
+
+ul.controls .select-wrap div.none.hidden {
+	display: none;
+}
+
+.container {
+	position: relative;
+	width: 100%;
+	min-height: 500px;
+}
+
+.container .menu {
+	width: 100%;
+	transition: all 0.2s ease-in-out;
+}
+
+.menu ul {
+	width: 100%;
+	font: normal 16px/18px 'Hammersmith One';
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+}
+
+.menu ul li {
+	-webkit-flex: 1 100%;
+	text-align: center;
+	padding: 1em 0;
+	background: #eb5b59;
+	color: #e5ccdb;
+	cursor: pointer; /* weird iOS bug needs this for events to work */
+}
+
+@media only screen and (min-width : 321px) {
+	.menu ul li {
+		-webkit-flex: 1 50%;
+	}
+}
+
+@media (min-width: 769px) {
+	.menu ul li {
+		-webkit-flex: 1 30%;
+	}
+}
+
+/* blue on mint */
+.menu ul li.style-1 {
+	background: rgb(171,222,191);
+	color: rgb(87,141,152);
+}
+/* red on gray  */
+.menu ul li.style-2 {
+	background: rgb(89,85,83);
+	color: rgb(218,108,78);
+}
+/* red on orange */
+.menu ul li.style-3 {
+	background: rgb(218,109,79);
+	color: rgb(187,57,73);
+}
+/* yellow on green */
+.menu ul li.style-4 {
+	background: rgb(126,177,121);
+	color: rgb(219,226,154);
+}
+/* green on tan */
+.menu ul li.style-5 {
+	background: rgb(228,226,203);
+	color: rgb(126,177,121);
+}
+/* yellow on maroon */
+.menu ul li.style-6 {
+	background: rgb(187,93,66);
+	color: rgb(255,244,101);
+}
+/* pink on light blue */
+.menu ul li.style-7 {
+	background: rgb(216,226,214);
+	color: rgb(212,96,114);
+}
+
+
+
+
+.menu.open {
+	-webkit-transform: scale(1.2);
+	transform: scale(1.2);
+	-webkit-filter: blur(15px);
+	filter: blur(15px);
+}
+
+
+
+
+
+.card {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	bottom: 20px;
+	right: 20px;
+	background: #eee;
+	border-radius: 2px;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.2);
+	color: #444;
+	font: 400 18px/23px 'Vollkorn';
+}
+
+.card-inner {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	padding: 20px;
+	z-index: 1;
+}
+
+.card .title {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	border-bottom: 1px solid #ddd;
+	padding: 15px 30px;
+}
+
+.card .title h1 {
+	font: 700 24px/30px 'Playfair Display';
+	margin: 0;
+	padding: 0;
+}
+
+.card .title .close {
+	font-size: 26px;
+	line-height: 30px;
+	cursor: pointer;
+	float: right;
+	padding: 15px 20px;
+	margin: -15px -20px;
+}
+
+.card .card-content {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	position: absolute;
+	z-index: 2;
+	top: 60px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.card .card-inner {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: flex-start;
+}
+
+
+.card ul.stats {
+	font-family: 'Hammersmith One';
+	text-transform: uppercase;
+	font-size: 12px;
+	border-bottom: 2px dotted #ddd;
+}
+	.card ul.stats > li {
+		padding: 0.5em 0 0.5em 2.5em;
+		position: relative;
+	}
+	.card ul.stats > li:before {
+		content: '';
+		position: absolute;
+		border-radius: 4px;
+		background: #eb7b59;
+		height: 4px;
+		width: 4px;
+		top: 15px;
+		left: -2px;
+	}
+	.card ul.stats li:first-child:before {
+		display: none;
+	}
+	.card ul.stats li {
+		display: inline-block;
+	}
+	.card ul.stats li + li {
+		margin-left: 1.5em;
+	}
+	.card ul.stats > li + li {
+		margin-left: 2.5em;
+	}
+	.card ul.stats em {
+		font-style: normal;
+		color: #999;
+	}
+	.card ul.stats a {
+		text-decoration: underline;
+		color: #464646;
+	}
+
+
+.card .card-content .card-left {
+	-webkit-flex: 1 33%;
+	-webkit-align-self: flex-start;
+	align-self: flex-start;
+	padding: 15px 20px 15px 0;
+}
+.card .card-content .card-right {
+	-webkit-flex: 2 67%;
+	-webkit-align-self: flex-start;
+	align-self: flex-start;
+	padding: 15px 20px;
+}
+
+
+.ingredients li {
+	margin: 0 0 0.5em 0;
+	padding: 0 0 0 3em;
+}
+.ingredients li .quantity {
+	float: left;
+	width: 2.5em;
+	text-align: right;
+	margin-left: -3em;
+	font-family: 'Hammersmith One';
+    font-size: 13px;
+    line-height: 26px;
+}
+.ingredients .measure {
+	display: inline-block;
+	margin-right: 0.25em;
+}
+.ingredients .preparation {
+	display: block;
+	font-style: italic;
+	color: #999;
+}
+
+
+ol.steps {
+	margin: 0;
+	padding: 0;
+	counter-reset:li;
+	list-style-type: none;
+}
+ol.steps li {
+	margin: 0 0 1em 1.5em;
+	position: relative;
+}
+ol.steps li:before {
+    content:counter(li); /* Use the counter as content */
+    counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+    position:absolute;
+    top:0;
+    left:-1.5em;
+    font-family: 'Hammersmith One';
+    font-size: 13px;
+    line-height: 26px;
+}
+
+.card .notes {
+	margin: 2em 0 0 1.5em;
+}
+.card .notes h4 {
+	margin: 0;
+	font-family: 'Hammersmith One';
+	text-transform: uppercase;
+	font-size: 12px;
+	color: #999;
+}
+.card .notes p {
+	font-style: italic;
+	margin: 0;
+}
