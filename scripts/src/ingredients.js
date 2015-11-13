@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 
 var IngredientEditor = React.createClass({
 	getInitialState: function () {	
@@ -67,6 +66,6 @@ var IngredientEditor = React.createClass({
 $(document).ready(function () {
 	$('[data-ingredients]').each(function () {
 		var data = $(this).attr('data-ingredients') || '[{}]';
-		React.renderComponent(<IngredientEditor data={data} measures={measures} />, this);
+		React.render(<IngredientEditor data={data} measures={measures} />, this);
 	});
 });

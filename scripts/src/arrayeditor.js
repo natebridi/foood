@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 
 var ArrayEditor = React.createClass({
 	getInitialState: function () {
@@ -63,6 +62,6 @@ $(document).ready(function () {
 	$('[data-array]').each(function () {
 		var data = $(this).attr('data-array') || '[""]',
 			name = $(this).attr('data-name');
-		React.renderComponent(<ArrayEditor data={data} name={name} />, this);
+		React.render(<ArrayEditor data={data} name={name} />, this);
 	});
 });

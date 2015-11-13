@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 
 var Cookbook = React.createClass({
 	getInitialState: function () {
@@ -233,7 +232,7 @@ var Ingredient = React.createClass({
 	}
 });
 
-React.renderComponent(
+React.render(
 	<Cookbook />,
 	document.getElementById('cookbook')
 );

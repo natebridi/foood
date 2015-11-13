@@ -7,8 +7,7 @@ if (empty($_SESSION['authenticated'])) {
     exit;
 }
 
-require 'rb.php';
-R::setup('mysql:host=localhost;dbname=nbridi_foood','nbridi_foood','mk^Hw-c@*RSg');
+require '../database/connect.php';
 
 $recipes = R::findAll('recipes');
 ?>
@@ -20,16 +19,6 @@ $recipes = R::findAll('recipes');
 	<link href='http://fonts.googleapis.com/css?family=Hammersmith+One|Playfair+Display:700|Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="admin.css" />
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-
-
-	<script src="http://fb.me/react-with-addons-0.10.0.min.js"></script>
-	<script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="../definitions.js"></script>
-	<script src="arrayeditor.js" type="text/jsx"></script>
-	<script src="ingredients.js" type="text/jsx"></script>
-	<script src="admin.js"></script>
 	
 </head>
 <body>
@@ -145,5 +134,13 @@ if ($id) {
 </form>
 </div>
 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+	<script src="http://fb.me/react-0.14.2.min.js"></script>
+	<script src="http://fb.me/react-dom-0.14.2.min.js"></script>
+	<script src="/scripts/lib/definitions.js"></script>
+	<script src="/scripts/lib/arrayeditor.js"></script>
+	<script src="/scripts/lib/ingredients.js"></script>
+	<script src="admin.js"></script>
 </body>
 </html>
