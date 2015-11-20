@@ -4,18 +4,16 @@ var Cookbook = React.createClass({
 		return {
 			currentRecipe: {},
 			query: '',
-			tags: [],
-			currentTag: '',
 			recipes: []
 		};
 	},		
 	componentDidMount: function () {
-		var _this = this,
-			tags = [];
+		var _this = this;
 		
 		$.ajax({
 			url: '/fetch/list.php',
 			success: function (recipes) {
+
 				var parsed = JSON.parse(recipes),
 				    count = 1;
 				    
@@ -23,12 +21,10 @@ var Cookbook = React.createClass({
 					parsed[index].class = 'style-' + count;
 					count++;
 					if (count == 8) count = 1;
-					if (recipe.tags) tags.push(recipe.tags);
 				});
 				
 				_this.setState({
-					recipes: parsed,
-					tags: _.uniq(_.flatten(tags))
+					recipes: parsed
 				});
 			}
 		});
@@ -61,31 +57,9 @@ var Cookbook = React.createClass({
 			query: ''
 		});
 	},
-	setTag: function (e) {		
-		this.setState({
-			currentTag: e.target.value
-		});
-	},
-	clearTag: function () {
-		this.setState({
-			currentTag: ''
-		});
-	},
 	render: function () {	
 		var filteredRecipes = this.state.recipes,
-			clearSearch = [],
-			clearTags = [];
-		
-		if (this.state.currentTag) {
-			filteredRecipes = _.filter(this.state.recipes, function (recipe) {
-				if (recipe.tags)
-					return recipe.tags.indexOf(this.state.currentTag) != -1;
-				else 
-					return false;
-			}, this);
-			
-			clearTags = <div className="clear" onClick={this.clearTag}></div>;
-		}
+			clearSearch = [];
 		
 		if (this.state.query) {
 			filteredRecipes = _.filter(filteredRecipes, function (recipe) {
@@ -99,10 +73,6 @@ var Cookbook = React.createClass({
 			return <li key={i} onClick={this.pullCardOut.bind(null, recipe.id)} className={recipe.class} dangerouslySetInnerHTML={{__html: recipe.title}}></li>;
 		}, this);
 		
-		var tags = this.state.tags.map(function (tag, i) {
-			return <option key={i}>{tag}</option>;
-		}, this);
-		
 		var recipeCard = [];
 		
 		if (!_.isEmpty(this.state.currentRecipe))
@@ -114,16 +84,6 @@ var Cookbook = React.createClass({
 				<li className={(this.state.query != '') ? 'active' : ''}>
 					<input type="text" ref="search" placeholder="Search" value={this.state.query} onChange={this.doSearch} />
 					{clearSearch}
-				</li>
-				<li className={(this.state.currentTag != '') ? 'active' : ''}>
-					<div className="select-wrap">
-						<select value={this.state.currentTag} onChange={this.setTag}>
-							{tags}
-						</select>
-						<div className="current">{this.state.currentTag}</div>
-						<div className={(this.state.currentTag != '') ? 'none hidden' : 'none'}>Tags</div>
-					</div>
-					{clearTags}
 				</li>
 			</ul>
 			<div className={(!_.isEmpty(this.state.currentRecipe)) ? 'menu open' : 'menu'}>
