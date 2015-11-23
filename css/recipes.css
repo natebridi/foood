@@ -266,16 +266,30 @@ ul.menu li.style-7 {
 	}
 
 	.card-wrap .title .close {
-		font-size: 26px;
-		line-height: 2em;
 		cursor: pointer;
 		position: absolute;
 		right: 0;
 		top: 0;
-		width: 1.5em;
-		text-align: center;
-		height: 2em;
+		width: 60px;
+		height: 60px;
 	}
+		.card-wrap .title .close:before {
+			content: '';
+			border-radius: 50%;
+			height: 2px;
+			width: 2px;
+			background-color: #000;
+			opacity: 0.6;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			box-shadow: -2px -2px, 2px -2px, -2px 2px, 2px 2px, -4px -4px, 4px 4px, -4px 4px, 4px -4px;
+			transition: all 0.1s ease-in-out;
+		}
+		.card-wrap .title .close:hover:before {
+			box-shadow: -3px -3px, 3px -3px, -3px 3px, 3px 3px, -6px -6px, 6px 6px, -6px 6px, 6px -6px;
+		}
+
 
 	@media (min-width: 600px) {
 		.card-wrap .title {

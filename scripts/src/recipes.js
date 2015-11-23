@@ -151,7 +151,7 @@ var IndexCard = React.createClass({
 	
 		return <div className="card-inner">
 			<div className="title">
-				<div className="close" onClick={this.putCardAway}>&times;</div>
+				<div className="close" onClick={this.putCardAway}></div>
 				<h1 dangerouslySetInnerHTML={{__html: recipe.title}}></h1>
 			</div>
 			<div className="card-content">

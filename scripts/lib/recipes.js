@@ -234,11 +234,7 @@ var IndexCard = React.createClass({
 			React.createElement(
 				'div',
 				{ className: 'title' },
-				React.createElement(
-					'div',
-					{ className: 'close', onClick: this.putCardAway },
-					'×'
-				),
+				React.createElement('div', { className: 'close', onClick: this.putCardAway }),
 				React.createElement('h1', { dangerouslySetInnerHTML: { __html: recipe.title } })
 			),
 			React.createElement(
