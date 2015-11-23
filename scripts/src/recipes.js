@@ -3,6 +3,7 @@ var Cookbook = React.createClass({
 	getInitialState: function () {
 		return {
 			currentRecipe: {},
+			recipeOpen: false,
 			query: '',
 			recipes: []
 		};
@@ -37,6 +38,7 @@ var Cookbook = React.createClass({
 			data: { "id" : id },
 			success: function (recipe) {
 				_this.setState({
+					recipeOpen: true,
 					currentRecipe: JSON.parse(recipe)
 				});
 			}
@@ -44,7 +46,7 @@ var Cookbook = React.createClass({
 	},
 	putCardAway: function () {
 		this.setState({
-			currentRecipe: {}
+			recipeOpen: false
 		});
 	},
 	doSearch: function (e) {	
@@ -70,7 +72,7 @@ var Cookbook = React.createClass({
 		}
 		
 		var recipes = filteredRecipes.map(function (recipe, i) {
-			return <li key={i} onClick={this.pullCardOut.bind(null, recipe.id)} className={recipe.class} dangerouslySetInnerHTML={{__html: recipe.title}}></li>;
+			return <li key={i} onClick={this.pullCardOut.bind(null, recipe.id)} className={recipe.class}><span dangerouslySetInnerHTML={{__html: recipe.title}}></span></li>;
 		}, this);
 		
 		var recipeCard = [];
@@ -78,20 +80,24 @@ var Cookbook = React.createClass({
 		if (!_.isEmpty(this.state.currentRecipe))
 			recipeCard = <IndexCard recipe={this.state.currentRecipe} putCardAway={this.putCardAway} />;
 	
-		return 	<div className="container">
-			<ul className="controls">
-				<li><i>F</i><i>o</i><i>o</i><i>o</i><i>d</i></li>
-				<li className={(this.state.query != '') ? 'active' : ''}>
-					<input type="text" ref="search" placeholder="Search" value={this.state.query} onChange={this.doSearch} />
-					{clearSearch}
-				</li>
-			</ul>
-			<div className={(!_.isEmpty(this.state.currentRecipe)) ? 'menu open' : 'menu'}>
-				<ul>
-					{recipes}
-				</ul>
+		return 	<div className={(this.state.recipeOpen) ? 'content-wrap open' : 'content-wrap'}>
+			<div className="content-inner">
+				<div className="menu-wrap">
+					<ul className="controls">
+						<li><i>F</i><i>o</i><i>o</i><i>o</i><i>d</i></li>
+						<li className={(this.state.query != '') ? 'active' : ''}>
+							<input type="text" ref="search" placeholder="Search" value={this.state.query} onChange={this.doSearch} />
+							{clearSearch}
+						</li>
+					</ul>
+					<ul className="menu">
+						{recipes}
+					</ul>
+				</div>
+				<div className="card-wrap">
+					{recipeCard}
+				</div>
 			</div>
-			{recipeCard}
 		</div>;
 	}
 });
@@ -122,11 +128,11 @@ var IndexCard = React.createClass({
 		}
 		
 		if (recipe.time && recipe.time.total) {
-			timeTotal = <li><em>Time</em> {recipe.time.total}</li>;
+			timeTotal = <div><em>Time</em> {recipe.time.total}</div>;
 		}
 		
 		if (recipe.time && recipe.time.active) {
-			timeActive = <li><em>Active</em> {recipe.time.active}</li>;
+			timeActive = <div><em>Active</em> {recipe.time.active}</div>;
 		}
 		
 		if (recipe.source && recipe.source.url) {
@@ -143,26 +149,24 @@ var IndexCard = React.createClass({
 					</div>;
 		}
 	
-		return <div className="card">
-			<div className="card-inner">
-				<div className="title">
-					<div className="close" onClick={this.putCardAway}>&times;</div>
-					<h1 dangerouslySetInnerHTML={{__html: recipe.title}}></h1>
-				</div>
-				<div className="card-content">
-					<ul className="stats">
-						<li className="servings"><em>Servings</em> {recipe.servings}</li>
-						<li><ul className="time">{timeTotal}{timeActive}</ul></li>
-						<li className="source"><em>Source</em> {source}</li>
-					</ul>
-					<div className="card-inner">
-						<div className="card-left">
-							<ul className="ingredients">{ingredients}</ul>
-						</div>
-						<div className="card-right">
-							<ol className="steps">{steps}</ol>
-							{notes}
-						</div>
+		return <div className="card-inner">
+			<div className="title">
+				<div className="close" onClick={this.putCardAway}>&times;</div>
+				<h1 dangerouslySetInnerHTML={{__html: recipe.title}}></h1>
+			</div>
+			<div className="card-content">
+				<ul className="stats">
+					<li className="servings"><em>Servings</em> {recipe.servings}</li>
+					<li><div className="time">{timeTotal}{timeActive}</div></li>
+					<li className="source"><em>Source</em> {source}</li>
+				</ul>
+				<div className="card-inner">
+					<div className="card-left">
+						<ul className="ingredients">{ingredients}</ul>
+					</div>
+					<div className="card-right">
+						<ol className="steps">{steps}</ol>
+						{notes}
 					</div>
 				</div>
 			</div>

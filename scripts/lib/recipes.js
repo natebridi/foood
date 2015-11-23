@@ -5,6 +5,7 @@ var Cookbook = React.createClass({
 	getInitialState: function () {
 		return {
 			currentRecipe: {},
+			recipeOpen: false,
 			query: '',
 			recipes: []
 		};
@@ -39,6 +40,7 @@ var Cookbook = React.createClass({
 			data: { "id": id },
 			success: function (recipe) {
 				_this.setState({
+					recipeOpen: true,
 					currentRecipe: JSON.parse(recipe)
 				});
 			}
@@ -46,7 +48,7 @@ var Cookbook = React.createClass({
 	},
 	putCardAway: function () {
 		this.setState({
-			currentRecipe: {}
+			recipeOpen: false
 		});
 	},
 	doSearch: function (e) {
@@ -72,7 +74,11 @@ var Cookbook = React.createClass({
 		}
 
 		var recipes = filteredRecipes.map(function (recipe, i) {
-			return React.createElement('li', { key: i, onClick: this.pullCardOut.bind(null, recipe.id), className: recipe.class, dangerouslySetInnerHTML: { __html: recipe.title } });
+			return React.createElement(
+				'li',
+				{ key: i, onClick: this.pullCardOut.bind(null, recipe.id), className: recipe.class },
+				React.createElement('span', { dangerouslySetInnerHTML: { __html: recipe.title } })
+			);
 		}, this);
 
 		var recipeCard = [];
@@ -81,56 +87,64 @@ var Cookbook = React.createClass({
 
 		return React.createElement(
 			'div',
-			{ className: 'container' },
+			{ className: this.state.recipeOpen ? 'content-wrap open' : 'content-wrap' },
 			React.createElement(
-				'ul',
-				{ className: 'controls' },
+				'div',
+				{ className: 'content-inner' },
 				React.createElement(
-					'li',
-					null,
+					'div',
+					{ className: 'menu-wrap' },
 					React.createElement(
-						'i',
-						null,
-						'F'
+						'ul',
+						{ className: 'controls' },
+						React.createElement(
+							'li',
+							null,
+							React.createElement(
+								'i',
+								null,
+								'F'
+							),
+							React.createElement(
+								'i',
+								null,
+								'o'
+							),
+							React.createElement(
+								'i',
+								null,
+								'o'
+							),
+							React.createElement(
+								'i',
+								null,
+								'o'
+							),
+							React.createElement(
+								'i',
+								null,
+								'd'
+							)
+						),
+						React.createElement(
+							'li',
+							{ className: this.state.query != '' ? 'active' : '' },
+							React.createElement('input', { type: 'text', ref: 'search', placeholder: 'Search', value: this.state.query, onChange: this.doSearch }),
+							clearSearch
+						)
 					),
 					React.createElement(
-						'i',
-						null,
-						'o'
-					),
-					React.createElement(
-						'i',
-						null,
-						'o'
-					),
-					React.createElement(
-						'i',
-						null,
-						'o'
-					),
-					React.createElement(
-						'i',
-						null,
-						'd'
+						'ul',
+						{ className: 'menu' },
+						recipes
 					)
 				),
 				React.createElement(
-					'li',
-					{ className: this.state.query != '' ? 'active' : '' },
-					React.createElement('input', { type: 'text', ref: 'search', placeholder: 'Search', value: this.state.query, onChange: this.doSearch }),
-					clearSearch
+					'div',
+					{ className: 'card-wrap' },
+					recipeCard
 				)
-			),
-			React.createElement(
-				'div',
-				{ className: !_.isEmpty(this.state.currentRecipe) ? 'menu open' : 'menu' },
-				React.createElement(
-					'ul',
-					null,
-					recipes
-				)
-			),
-			recipeCard
+			)
 		);
 	}
 });
@@ -164,7 +178,7 @@ var IndexCard = React.createClass({
 
 		if (recipe.time && recipe.time.total) {
 			timeTotal = React.createElement(
-				'li',
+				'div',
 				null,
 				React.createElement(
 					'em',
@@ -178,7 +192,7 @@ var IndexCard = React.createClass({
 
 		if (recipe.time && recipe.time.active) {
 			timeActive = React.createElement(
-				'li',
+				'div',
 				null,
 				React.createElement(
 					'em',
@@ -216,81 +230,77 @@ var IndexCard = React.createClass({
 
 		return React.createElement(
 			'div',
-			{ className: 'card' },
+			{ className: 'card-inner' },
 			React.createElement(
 				'div',
-				{ className: 'card-inner' },
+				{ className: 'title' },
 				React.createElement(
 					'div',
-					{ className: 'title' },
+					{ className: 'close', onClick: this.putCardAway },
+					'×'
+				),
+				React.createElement('h1', { dangerouslySetInnerHTML: { __html: recipe.title } })
+			),
+			React.createElement(
+				'div',
+				{ className: 'card-content' },
+				React.createElement(
+					'ul',
+					{ className: 'stats' },
 					React.createElement(
-						'div',
-						{ className: 'close', onClick: this.putCardAway },
-						'×'
+						'li',
+						{ className: 'servings' },
+						React.createElement(
+							'em',
+							null,
+							'Servings'
+						),
+						' ',
+						recipe.servings
 					),
-					React.createElement('h1', { dangerouslySetInnerHTML: { __html: recipe.title } })
+					React.createElement(
+						'li',
+						null,
+						React.createElement(
+							'div',
+							{ className: 'time' },
+							timeTotal,
+							timeActive
+						)
+					),
+					React.createElement(
+						'li',
+						{ className: 'source' },
+						React.createElement(
+							'em',
+							null,
+							'Source'
+						),
+						' ',
+						source
+					)
 				),
 				React.createElement(
 					'div',
-					{ className: 'card-content' },
+					{ className: 'card-inner' },
 					React.createElement(
-						'ul',
-						{ className: 'stats' },
+						'div',
+						{ className: 'card-left' },
 						React.createElement(
-							'li',
-							{ className: 'servings' },
-							React.createElement(
-								'em',
-								null,
-								'Servings'
-							),
-							' ',
-							recipe.servings
-						),
-						React.createElement(
-							'li',
-							null,
-							React.createElement(
-								'ul',
-								{ className: 'time' },
-								timeTotal,
-								timeActive
-							)
-						),
-						React.createElement(
-							'li',
-							{ className: 'source' },
-							React.createElement(
-								'em',
-								null,
-								'Source'
-							),
-							' ',
-							source
+							'ul',
+							{ className: 'ingredients' },
+							ingredients
 						)
 					),
 					React.createElement(
 						'div',
-						{ className: 'card-inner' },
+						{ className: 'card-right' },
 						React.createElement(
-							'div',
-							{ className: 'card-left' },
-							React.createElement(
-								'ul',
-								{ className: 'ingredients' },
-								ingredients
-							)
+							'ol',
+							{ className: 'steps' },
+							steps
 						),
-						React.createElement(
-							'div',
-							{ className: 'card-right' },
-							React.createElement(
-								'ol',
-								{ className: 'steps' },
-								steps
-							),
-							notes
-						)
+						notes
 					)
 				)
 			)
