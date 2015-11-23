@@ -295,6 +295,9 @@ ul.menu li.style-7 {
 		.card-wrap .title {
 			padding: 25px 40px;
 		}
+		.card-wrap .title .close {
+			height: 80px;
+		}
 	}
 
 .card-wrap ul.stats {
