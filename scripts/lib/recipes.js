@@ -278,7 +278,7 @@ var IndexCard = React.createClass({
 				),
 				React.createElement(
 					'div',
-					{ className: 'card-inner' },
+					{ className: 'card-body' },
 					React.createElement(
 						'div',
 						{ className: 'card-left' },

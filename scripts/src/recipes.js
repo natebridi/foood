@@ -160,7 +160,7 @@ var IndexCard = React.createClass({
 					<li><div className="time">{timeTotal}{timeActive}</div></li>
 					<li className="source"><em>Source</em> {source}</li>
 				</ul>
-				<div className="card-inner">
+				<div className="card-body">
 					<div className="card-left">
 						<ul className="ingredients">{ingredients}</ul>
 					</div>

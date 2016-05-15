@@ -51,7 +51,7 @@ ul.controls li {
 ul.controls li:first-child {
 	flex-grow: 1;
 	background: #fff;
-	padding: 1em 0;
+	padding: 1em;
 }
 ul.controls li:first-child i {
 	font-style: normal;
@@ -163,6 +163,7 @@ ul.controls .clear:after {
 		flex: 1 0 0;
 		height: 100%;
 		overflow: scroll;
+		-webkit-overflow-scrolling: touch;
 	}
 
 ul.menu {
@@ -325,7 +326,7 @@ ul.menu li.style-7 {
 	.card-wrap ul.stats div + div {
 		margin-left: 10px;
 	}
-	.card-wrap .card-content .card-inner {
+	.card-wrap .card-content .card-body {
 		padding: 15px 0 0 0;
 	}
 
@@ -347,14 +348,14 @@ ul.menu li.style-7 {
 			top: 8px;
 			left: -2px;
 		}
-		.card-wrap .card-content .card-inner {
+		.card-wrap .card-content .card-body {
 			display: flex;
 			padding-top: 25px;
 		}
-		.card-wrap .card-content .card-inner .card-left {
+		.card-wrap .card-content .card-body .card-left {
 			flex: 1 0 0;
 		}
-		.card-wrap .card-content .card-inner .card-right {
+		.card-wrap .card-content .card-body .card-right {
 			flex: 2 0 0;
 		}
 	}
