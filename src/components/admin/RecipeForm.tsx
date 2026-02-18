@@ -8,13 +8,15 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CheckIcon from "@mui/icons-material/Check";
 import IngredientEditor from "./IngredientEditor";
 import ArrayEditor from "./ArrayEditor";
 import type { Ingredient } from "@/types/recipe";
+import Alert from "@mui/material/Alert";
 
 interface RecipeData {
   id: number;
@@ -40,6 +42,7 @@ export default function RecipeForm({ recipe, isNew }: Props) {
   const [form, setForm] = useState<RecipeData>(recipe);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   function setField(field: keyof RecipeData, value: string) {
     setForm((f) => ({ ...f, [field]: value }));
@@ -48,6 +51,7 @@ export default function RecipeForm({ recipe, isNew }: Props) {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
+    scrollTo(0, 0);
 
     const res = await fetch("/admin/api/recipes", {
       method: "POST",
@@ -71,6 +75,7 @@ export default function RecipeForm({ recipe, isNew }: Props) {
     if (res.ok) {
       const data = await res.json();
       router.push(`/admin/edit?id=${data.id}`);
+      setShowSuccessMessage(true);
     }
     setSaving(false);
   }
@@ -86,6 +91,11 @@ export default function RecipeForm({ recipe, isNew }: Props) {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
+      {showSuccessMessage && (
+        <Alert icon={<CheckIcon />} variant="filled" severity="success" onClose={() => setShowSuccessMessage(false)} sx={{ mb: 3 }}>
+          Recipe saved successfully
+        </Alert>
+      )}
       <Box component="form" onSubmit={handleSave}>
         <Stack spacing={3}>
           {!isNew && (
@@ -102,12 +112,14 @@ export default function RecipeForm({ recipe, isNew }: Props) {
           <TextField
             label="Title"
             value={form.title}
+            variant="standard"
             onChange={(e) => setField("title", e.target.value)}
             fullWidth
             required
+            sx={{ input: { fontSize: "1.5rem", fontWeight: 500 } }}
           />
 
-          <Box sx={{ display: "flex", gap: 2 }}>
+          <Stack direction={{xs: "column", sm: "row"}} spacing={2}>
             <TextField
               label="Servings"
               value={form.servings}
@@ -126,7 +138,7 @@ export default function RecipeForm({ recipe, isNew }: Props) {
               onChange={(e) => setField("timeactive", e.target.value)}
               sx={{ flex: 1 }}
             />
-          </Box>
+          </Stack>
 
           <Box>
             <Typography variant="subtitle2" color="text.secondary" gutterBottom>
@@ -186,14 +198,13 @@ export default function RecipeForm({ recipe, isNew }: Props) {
             />
           )}
 
-          <Divider />
-
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Stack direction="row" justifyContent="space-between">
             {!isNew && (
               <Button
-                variant="outlined"
                 color="error"
                 onClick={() => setShowDeleteDialog(true)}
+                startIcon={<DeleteIcon />}
+                size="large"
               >
                 Delete
               </Button>
@@ -202,11 +213,11 @@ export default function RecipeForm({ recipe, isNew }: Props) {
               type="submit"
               variant="contained"
               disabled={saving}
-              sx={{ ml: "auto" }}
+              size="large"
             >
               {saving ? "Saving…" : isNew ? "Save new recipe" : "Update recipe"}
             </Button>
-          </Box>
+          </Stack>
         </Stack>
       </Box>
 

@@ -74,8 +74,7 @@ export default function IngredientEditor({ value, onChange }: Props) {
       <Button
         onClick={addItem}
         startIcon={<AddIcon />}
-        variant="outlined"
-        size="small"
+        size="medium"
         sx={{ alignSelf: "flex-start" }}
       >
         Add ingredient

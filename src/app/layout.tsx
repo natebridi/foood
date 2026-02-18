@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "./recipes.css";
 
 export const metadata: Metadata = {
   title: "Foood",
@@ -18,7 +17,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body style={{ scrollBehavior: "smooth" }}>{children}</body>
     </html>
   );
 }
