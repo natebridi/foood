@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import pool from "@/lib/db";
+import AdminNav from "@/components/admin/AdminNav";
 import RecipeForm from "@/components/admin/RecipeForm";
 import type { RowDataPacket } from "mysql2";
 import type { RecipeRow, Ingredient } from "@/types/recipe";
@@ -19,14 +19,6 @@ async function getRecipe(id: string) {
   );
   if (rows.length === 0) return null;
   return rows[0] as RecipeRow;
-}
-
-async function handleLogout(formData: FormData) {
-  "use server";
-  void formData;
-  const cookieStore = await cookies();
-  cookieStore.set("auth", "", { maxAge: 0, path: "/" });
-  redirect("/admin/login");
 }
 
 function parseJsonColumn<T>(val: string, fallback: T): T {
@@ -97,43 +89,8 @@ export default async function EditPage({
 
   return (
     <>
-      <div className="main-nav">
-        <div className="select-wrap">
-          <select
-            id="recipeSelect"
-            defaultValue={id ?? ""}
-            onChange={undefined}
-          >
-            <option value="">Add new recipe</option>
-            {recipes.map((r) => (
-              <option key={r.id} value={r.id}>
-                {r.title}
-              </option>
-            ))}
-          </select>
-        </div>
-        <form action={handleLogout}>
-          <button
-            type="submit"
-            style={{ background: "none", border: "none", cursor: "pointer", color: "#ccc", margin: "0.5em 0", float: "right", font: "inherit" }}
-          >
-            Logout
-          </button>
-        </form>
-      </div>
-
+      <AdminNav recipes={recipes} selectedId={id} />
       <RecipeForm recipe={recipeData} isNew={isNew} />
-
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            document.getElementById('recipeSelect').addEventListener('change', function() {
-              var id = this.value;
-              window.location.href = id ? '/admin/edit?id=' + id : '/admin/edit';
-            });
-          `,
-        }}
-      />
     </>
   );
 }

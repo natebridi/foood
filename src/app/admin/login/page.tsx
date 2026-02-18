@@ -2,6 +2,8 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 export default function LoginPage() {
   const [error, setError] = useState(false);
@@ -30,33 +32,28 @@ export default function LoginPage() {
   }
 
   return (
-    <>
-      <style>{`
-        body { background: #eee; }
-        input {
-          display: block;
-          padding: 0.5em 1em;
-          width: 200px;
-          color: ${error ? "#f00" : "#444"};
-          font-size: 18px;
-          margin: 3em auto;
-          border: 0;
-          background: #fff;
-          box-shadow: none;
-          border-radius: 3px;
-        }
-      `}</style>
-      <form onSubmit={handleSubmit}>
-        <input
-          ref={inputRef}
-          type="text"
-          name="password"
-          autoComplete="off"
-          autoCapitalize="off"
-          placeholder="Enter password"
-          autoFocus
-        />
-      </form>
-    </>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        bgcolor: "grey.100",
+      }}
+    >
+      <TextField
+        inputRef={inputRef}
+        type="password"
+        placeholder="Password"
+        error={error}
+        helperText={error ? "Incorrect password" : ""}
+        autoFocus
+        autoComplete="off"
+        variant="outlined"
+        size="small"
+      />
+    </Box>
   );
 }

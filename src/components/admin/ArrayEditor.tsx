@@ -1,5 +1,12 @@
 "use client";
 
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
+
 interface Props {
   value: string[];
   onChange: (v: string[]) => void;
@@ -19,29 +26,40 @@ export default function ArrayEditor({ value, onChange }: Props) {
     onChange([...value, ""]);
   }
 
-  function autoResize(e: React.FormEvent<HTMLTextAreaElement>) {
-    const el = e.currentTarget;
-    el.style.height = "40px";
-    el.style.height = el.scrollHeight + "px";
-  }
-
   return (
-    <div className="steps">
-      <ul>
-        {value.map((item, index) => (
-          <li key={index}>
-            <span className="delete" onClick={() => removeItem(index)}>&times;</span>
-            <div className="textarea-wrap">
-              <textarea
-                value={item}
-                onChange={(e) => updateItem(index, e.target.value)}
-                onInput={autoResize}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className="add" onClick={addItem}>Add</div>
-    </div>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
+      {value.map((item, index) => (
+        <Box key={index} sx={{ display: "flex", alignItems: "flex-start" }}>
+          <TextField
+            value={item}
+            onChange={(e) => updateItem(index, e.target.value)}
+            multiline
+            fullWidth
+            size="small"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: index === 0
+                  ? "4px 4px 0 0"
+                  : index === value.length - 1
+                  ? "0 0 4px 4px"
+                  : "0",
+              },
+            }}
+          />
+          <IconButton onClick={() => removeItem(index)} size="small" sx={{ mt: 0.5 }}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </Box>
+      ))}
+      <Button
+        onClick={addItem}
+        startIcon={<AddIcon />}
+        variant="outlined"
+        size="small"
+        sx={{ alignSelf: "flex-start", mt: 1 }}
+      >
+        Add
+      </Button>
+    </Box>
   );
 }

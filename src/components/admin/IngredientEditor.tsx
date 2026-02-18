@@ -1,5 +1,13 @@
 "use client";
 
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
 import { measures } from "@/lib/definitions";
 import type { Ingredient } from "@/types/recipe";
 
@@ -10,10 +18,7 @@ interface Props {
 
 export default function IngredientEditor({ value, onChange }: Props) {
   function updateField(index: number, field: keyof Ingredient, val: string) {
-    const updated = value.map((item, i) =>
-      i === index ? { ...item, [field]: val } : item
-    );
-    onChange(updated);
+    onChange(value.map((item, i) => (i === index ? { ...item, [field]: val } : item)));
   }
 
   function removeItem(index: number) {
@@ -25,42 +30,56 @@ export default function IngredientEditor({ value, onChange }: Props) {
   }
 
   return (
-    <div>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
       {value.map((ingredient, index) => (
-        <div className="ingredient" key={index}>
-          <input
-            type="text"
+        <Box key={index} sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          <TextField
             value={ingredient.quantity ?? ""}
             onChange={(e) => updateField(index, "quantity", e.target.value)}
-            placeholder="Quantity"
+            placeholder="Qty"
+            size="small"
+            sx={{ width: 70 }}
           />
-          <div className="select-wrap">
-            <select
-              value={ingredient.measure ?? -1}
-              onChange={(e) => updateField(index, "measure", e.target.value)}
-            >
-              <option value="-1"></option>
-              {measures.map((measure, i) => (
-                <option value={i} key={i}>{measure.full}</option>
-              ))}
-            </select>
-          </div>
-          <input
-            type="text"
+          <Select
+            value={String(ingredient.measure ?? -1)}
+            onChange={(e) => updateField(index, "measure", e.target.value)}
+            size="small"
+            displayEmpty
+            sx={{ minWidth: 130 }}
+          >
+            <MenuItem value="-1"><em>—</em></MenuItem>
+            {measures.map((m, i) => (
+              <MenuItem key={i} value={String(i)}>{m.full}</MenuItem>
+            ))}
+          </Select>
+          <TextField
             value={ingredient.name ?? ""}
             onChange={(e) => updateField(index, "name", e.target.value)}
             placeholder="Name"
+            size="small"
+            sx={{ flex: 2 }}
           />
-          <input
-            type="text"
+          <TextField
             value={ingredient.preparation ?? ""}
             onChange={(e) => updateField(index, "preparation", e.target.value)}
             placeholder="Preparation"
+            size="small"
+            sx={{ flex: 1 }}
           />
-          <div className="delete" onClick={() => removeItem(index)}>&times;</div>
-        </div>
+          <IconButton onClick={() => removeItem(index)} size="small" color="default">
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </Box>
       ))}
-      <div className="add-ingredient" onClick={addItem}>Add</div>
-    </div>
+      <Button
+        onClick={addItem}
+        startIcon={<AddIcon />}
+        variant="outlined"
+        size="small"
+        sx={{ alignSelf: "flex-start" }}
+      >
+        Add ingredient
+      </Button>
+    </Box>
   );
 }
