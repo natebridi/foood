@@ -4,47 +4,92 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal recipe cookbook web app. A single-page React frontend displays recipe tiles; clicking opens a full recipe card. A PHP admin panel allows CRUD operations on recipes.
+Personal recipe cookbook web app. A public page displays recipe tiles; clicking opens a full recipe card. A password-protected admin panel allows CRUD operations on recipes.
 
 ## Dev Commands
 
 ```bash
-# Start local server (from repo root)
-php -S localhost:8000
+# Start dev server
+npm run dev
 
-# Compile JSX (from scripts/ directory, run in watch mode while developing)
-cd scripts && babel --presets react --watch src/ --out-dir lib/
+# Production build
+npm run build
 ```
 
-There are no tests, no linter, and no npm scripts at the root level.
+## Stack
+
+- **Framework:** Next.js 16 (App Router, TypeScript)
+- **UI — public:** Global CSS (`src/app/recipes.css`), Google Fonts via `<link>` in root layout
+- **UI — admin:** MUI v6 (`@mui/material`) with a custom theme in `AdminThemeProvider`. Work Sans via `next/font/google`.
+- **Database:** MySQL, accessed directly via `mysql2/promise` pool singleton (`src/lib/db.ts`). Single table: `recipes`. No ORM, no migrations.
+- **Auth:** Custom httpOnly cookie (`auth`). Secret stored in `AUTH_SECRET` env var.
+
+## Environment
+
+Copy `.env.local` and fill in:
+
+```
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+ADMIN_PASSWORD=
+AUTH_SECRET=   # any random string
+```
 
 ## Architecture
 
-### Stack
-- **Frontend:** React 0.14.2 (loaded from CDN via `index.html`), jQuery, Underscore.js
-- **JSX build:** Babel CLI (manually run, not webpack). Source in `scripts/src/`, compiled output in `scripts/lib/`
-- **Backend:** PHP (no framework), RedBeanPHP ORM (`database/rb.php`)
-- **Database:** MySQL — single table `recipes`
-- **Deployment:** FTP via Sublime SFTP (`sftp-config.json`, gitignored)
+### Request flow — public
 
-### Request Flow
+`/` → `page.tsx` renders `<Cookbook />` (client component) → `fetch /api/recipes` → tile grid → click → `fetch /api/recipes/[id]` → `<IndexCard />`
 
-**Public (read):**
-`index.html` → React mounts → `$.ajax GET /fetch/list.php` → renders tile grid → tile click → `$.ajax GET /fetch/recipe.php?id=N` → renders recipe card
+### Request flow — admin
 
-**Admin (write):**
-`/admin/login.php` (session auth) → `/admin/addedit.php` (PHP form with embedded React editors) → POST `/admin/save.php` (RedBeanPHP R::store/R::trash) → redirect
+`/admin/login` → POST `/admin/api/login` → sets `auth` httpOnly cookie → redirect to `/admin/edit`
+
+`/admin/edit` is protected by `src/proxy.ts` (Next.js proxy/middleware). The page is a server component that fetches recipe list + selected recipe from MySQL, then renders `<AdminNav>` and `<RecipeForm>` (both client components).
+
+Saves go to POST `/admin/api/recipes` with `{ action: "create" | "update" | "delete", ...fields }`.
 
 ### Database
 
-Single table: `recipes`. Columns: `id`, `title`, `servings`, `timetotal`, `timeactive`, `sourcename`, `sourceurl`, `notes`, `steps` (text), `tags` (varchar), `ingredients` (text).
+Single table: `recipes`. Columns: `id`, `title`, `servings`, `timetotal`, `timeactive`, `sourcename`, `sourceurl`, `notes`, `steps`, `tags`, `ingredients`.
 
-**Important:** `steps`, `tags`, and `ingredients` are stored as **JSON strings** inside text columns. The frontend serializes/deserializes with `JSON.stringify`/`JSON.parse`. No SQL querying on these fields is possible.
+`steps`, `tags`, and `ingredients` are stored as **JSON strings** in text columns — always `JSON.parse` on read, `JSON.stringify` on write. No SQL querying on these fields is possible.
 
-Database bootstrap: `database/connect.php` requires `rb.php` + `config.php`, calls `R::setup()` and `R::freeze(TRUE)` (frozen mode — no auto-migrations).
+## File map
 
-`database/config.php` is gitignored. Copy `database/config-sample.php` to set up credentials.
-
-### React Version Note
-
-The app uses React 0.14.2 (2015 era) with `React.createClass` and `React.render` (pre-ReactDOM API). Do not attempt to use modern React patterns — they are incompatible with this version.
+```
+src/
+  proxy.ts                      # Protects /admin/edit — redirects to /admin/login if cookie missing
+  types/recipe.ts               # Shared interfaces: Recipe, RecipeRow, Ingredient, Measure, etc.
+  lib/
+    db.ts                       # mysql2 pool singleton
+    auth.ts                     # checkAuth() — reads httpOnly cookie server-side
+    definitions.ts              # measures[] array (typed)
+    utils.ts                    # replaceFractions()
+  app/
+    layout.tsx                  # Root layout — Google Fonts link, recipes.css
+    page.tsx                    # Renders <Cookbook />
+    recipes.css                 # Public site styles (global, no modules)
+    api/recipes/route.ts        # GET /api/recipes — list (id, title, ordered by title)
+    api/recipes/[id]/route.ts   # GET /api/recipes/[id] — full recipe, JSON columns parsed
+    admin/
+      layout.tsx                # Wraps admin in AppRouterCacheProvider + AdminThemeProvider
+      admin.css                 # (unused — kept for reference; MUI handles all admin styling)
+      login/page.tsx            # Login form (client component)
+      edit/page.tsx             # Server component: fetches data, renders AdminNav + RecipeForm
+      api/login/route.ts        # POST — validates ADMIN_PASSWORD, sets auth cookie
+      api/logout/route.ts       # POST — clears auth cookie
+      api/recipes/route.ts      # POST — create/update/delete, protected by checkAuth()
+  components/
+    Cookbook.tsx                # Client component: recipe list + search + open/close card
+    IndexCard.tsx               # Client component: full recipe card view
+    Ingredient.tsx              # Renders a single ingredient with fraction formatting
+    admin/
+      AdminThemeProvider.tsx    # "use client" MUI ThemeProvider + CssBaseline
+      AdminNav.tsx              # AppBar with recipe selector (MUI Select) + logout button
+      RecipeForm.tsx            # Full recipe edit form (MUI)
+      IngredientEditor.tsx      # Dynamic ingredient rows (MUI)
+      ArrayEditor.tsx           # Dynamic string list editor for steps/tags (MUI)
+```

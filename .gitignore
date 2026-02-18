@@ -2,4 +2,12 @@ database/config.php
 scripts/node_modules/*
 sftp-config.json
 
+.DS_Store
+
 database/foood-backup-2017-1-1.sql
+
+# Next.js
+.next/
+node_modules/
+.env.local
+
