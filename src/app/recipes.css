@@ -1,0 +1,433 @@
+
+/*◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>
+	Resets
+◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>*/
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #2e9adf;
+}
+
+
+
+
+/*.·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·°
+	Top Controls
+·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·°·.·° */
+
+ul.controls {
+	width: 100%;
+	font: normal 16px/18px 'Hammersmith One';
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	display: -webkit-flex;
+	display: flex;
+}
+
+ul.controls li {
+	flex-grow: 2;
+	text-align: center;
+	padding: 0;
+	background: #eee;
+	color: #ddd;
+	position: relative;
+}
+
+ul.controls li:first-child {
+	flex-grow: 1;
+	background: #fff;
+	padding: 1em;
+}
+ul.controls li:first-child i {
+	font-style: normal;
+	color: #a7c5bd;
+}
+ul.controls li:first-child i:nth-child(2) {
+	color: #e5ccdb;
+}
+ul.controls li:first-child i:nth-child(3) {
+	color: #eb7b59;
+}
+ul.controls li:first-child i:nth-child(4) {
+	color: #cf4647;
+}
+ul.controls li:first-child i:nth-child(5) {
+	color: #524656;
+}
+
+
+
+
+/* +—|—+ * +—|—+ * +—|—+ * +—|—+ * +—|—+ * +—|—+ *
+	Search
+ * +—|—+ * +—|—+ * +—|—+ * +—|—+ * +—|—+ * +—|—+ */
+
+input[type="text"] {
+	background: #eee;
+	font: normal 16px/18px 'Hammersmith One';
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	padding: 1em;
+	border: 0;
+	color: #fff;
+	box-shadow: none;
+	margin: 0;
+	width: 100%;
+	text-align: center;
+	border-radius: 0;
+}
+::-webkit-input-placeholder {
+    color: #ccc;
+}
+::-moz-placeholder {
+    color: #ccc;  
+}
+:-ms-input-placeholder {  
+   color: #ccc;  
+}
+
+ul.controls li.active,
+ul.controls li.active input,
+input[type="text"]:focus {
+	background: #aaa;
+	outline: none;
+	color: #fff;
+}
+
+ul.controls .clear {
+	cursor: pointer;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	background: #cf4647;
+	height: 52px;
+	width: 52px;
+}
+ul.controls .clear:after,
+ul.controls .clear:before {
+	content: '';
+	position: absolute;
+	border-radius: 4px;
+	background: #fff;
+	height: 3px;
+	width: 15px;
+	top: 23px;
+	right: 18px;
+	-webkit-transform: rotate(45deg);
+}
+ul.controls .clear:after {
+	-webkit-transform: rotate(-45deg);
+}
+
+
+
+
+/*=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+
+	List
+*=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+—+=+*/
+
+.content-wrap {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+	.content-wrap .content-inner {
+		width: 200vw;
+		height: 100vh;
+		overflow: hidden;
+		display: flex;
+		transition: all 0.2s ease-in-out;
+	}
+
+	.content-wrap.open .content-inner {
+		transform: translate(-100vw, 0);
+	}
+
+	.content-wrap .content-inner > div {
+		flex: 1 0 0;
+		height: 100%;
+		overflow: scroll;
+		-webkit-overflow-scrolling: touch;
+	}
+
+ul.menu {
+	width: 100%;
+	font: normal 16px/18px 'Hammersmith One';
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+}
+
+	ul.menu li {
+		-webkit-flex: 1 100%;
+				flex: 1 100%;
+		display: -webkit-flex;
+		display: 		 flex;
+		-webkit-align-items: center;
+				align-items: center;
+		-webkit-justify-content: center;
+				justify-content: center;
+		padding: 1em 0.5em;
+		text-align: center;
+		background: #eb5b59;
+		color: #e5ccdb;
+		cursor: pointer; /* weird iOS bug needs this for events to work */
+	}
+
+	@media only screen and (min-width : 321px) {
+		ul.menu li {
+			-webkit-flex: 1 50%;
+		}
+	}
+
+	@media (min-width: 769px) {
+		ul.menu li {
+			-webkit-flex: 1 30%;
+		}
+	}
+
+/* blue on mint */
+ul.menu li.style-1 {
+	background: rgb(171,222,191);
+	color: rgb(87,141,152);
+}
+/* red on gray  */
+ul.menu li.style-2 {
+	background: rgb(89,85,83);
+	color: rgb(218,108,78);
+}
+/* red on orange */
+ul.menu li.style-3 {
+	background: rgb(218,109,79);
+	color: rgb(187,57,73);
+}
+/* yellow on green */
+ul.menu li.style-4 {
+	background: rgb(126,177,121);
+	color: rgb(219,226,154);
+}
+/* green on tan */
+ul.menu li.style-5 {
+	background: rgb(228,226,203);
+	color: rgb(126,177,121);
+}
+/* yellow on maroon */
+ul.menu li.style-6 {
+	background: rgb(187,93,66);
+	color: rgb(255,244,101);
+}
+/* pink on light blue */
+ul.menu li.style-7 {
+	background: rgb(216,226,214);
+	color: rgb(212,96,114);
+}
+
+
+
+
+
+/*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*
+	Recipe Card
+·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*/
+
+.card-wrap {
+	background: #eee;
+	color: #444;
+	font: 400 18px/23px 'Vollkorn';
+}
+
+	.card-wrap .title {
+		border-bottom: 1px solid #ddd;
+		padding: 15px 20px;
+		position: relative;
+	}
+
+	.card-wrap .title h1 {
+		font: 700 24px/30px 'Playfair Display';
+		margin: 0;
+		padding: 0;
+	}
+
+	.card-wrap .title .close {
+		cursor: pointer;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 60px;
+		height: 60px;
+	}
+		.card-wrap .title .close:before {
+			content: '';
+			border-radius: 50%;
+			height: 2px;
+			width: 2px;
+			background-color: #000;
+			opacity: 0.6;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			box-shadow: -2px -2px, 2px -2px, -2px 2px, 2px 2px, -4px -4px, 4px 4px, -4px 4px, 4px -4px;
+			transition: all 0.1s ease-in-out;
+		}
+		.card-wrap .title .close:hover:before {
+			box-shadow: -3px -3px, 3px -3px, -3px 3px, 3px 3px, -6px -6px, 6px 6px, -6px 6px, 6px -6px;
+		}
+
+
+	@media (min-width: 600px) {
+		.card-wrap .title {
+			padding: 25px 40px;
+		}
+		.card-wrap .title .close {
+			height: 80px;
+		}
+	}
+
+.card-wrap ul.stats {
+	font-family: 'Hammersmith One';
+	text-transform: uppercase;
+	font-size: 12px;
+	border-bottom: 2px dotted #ddd;
+	padding: 15px 0;
+}
+	.card-wrap ul.stats li {
+		padding: 0 20px;
+		position: relative;
+	}
+	.card-wrap ul.stats em {
+		font-style: normal;
+		color: #999;
+	}
+	.card-wrap ul.stats a {
+		text-decoration: underline;
+		color: #464646;
+	}
+	.card-wrap ul.stats div {
+		display: inline-block;
+	}
+	.card-wrap ul.stats div + div {
+		margin-left: 10px;
+	}
+	.card-wrap .card-content .card-body {
+		padding: 15px 0 0 0;
+	}
+
+	@media (min-width: 600px) {
+		.card-wrap ul.stats {
+			padding: 25px 20px;
+			font-size: 14px;
+		}
+		.card-wrap ul.stats li {
+			display: inline-block;
+		}
+		.card-wrap ul.stats li + li:before {
+			content: '';
+			position: absolute;
+			border-radius: 4px;
+			background: #eb7b59;
+			height: 4px;
+			width: 4px;
+			top: 8px;
+			left: -2px;
+		}
+		.card-wrap .card-content .card-body {
+			display: flex;
+			padding-top: 25px;
+		}
+		.card-wrap .card-content .card-body .card-left {
+			flex: 1 0 0;
+		}
+		.card-wrap .card-content .card-body .card-right {
+			flex: 2 0 0;
+		}
+	}
+
+
+.ingredients li {
+	margin: 0 0 0.5em 0;
+	padding: 0 0 0 60px;
+}
+	.ingredients li .quantity {
+		float: left;
+		width: 50px;
+		text-align: right;
+		margin-left: -60px;
+		font-family: 'Hammersmith One';
+	    font-size: 13px;
+	    line-height: 26px;
+	}
+	.ingredients .measure {
+		display: inline-block;
+		margin-right: 0.25em;
+	}
+	.ingredients .preparation {
+		display: block;
+		font-style: italic;
+		color: #999;
+	}
+
+ol.steps {
+	margin: 20px 0 0;
+	padding: 0 20px;
+	counter-reset: li;
+	list-style-type: none;
+}
+	ol.steps li {
+		margin: 0 0 15px;
+		position: relative;
+	}
+	ol.steps li:before {
+		content: counter(li);
+		counter-increment: li;
+		width: 40px;
+		font-family: 'Hammersmith One';
+		font-size: 13px;
+		line-height: 23px;
+		float: left;
+	}
+
+	@media (min-width: 600px) {
+		ol.steps {
+			margin: 0;
+			padding: 0 40px;
+		}
+	}
+
+.card-wrap .notes {
+	margin: 2em 20px;
+}
+	.card-wrap .notes h4 {
+		margin: 0;
+		font-family: 'Hammersmith One';
+		text-transform: uppercase;
+		font-size: 12px;
+		color: #999;
+	}
+	.card-wrap .notes p {
+		font-style: italic;
+		margin: 0;
+	}
+
+	@media (min-width: 600px) {
+		.card-wrap .notes {
+			margin: 2em 40px;
+		}
+	}
