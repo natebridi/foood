@@ -21,6 +21,7 @@ export async function GET(
   const recipe: Recipe = {
     id: row.id,
     title: row.title,
+    slug: row.slug,
     servings: row.servings,
     time: { total: row.timetotal, active: row.timeactive },
     source: { name: row.sourcename, url: row.sourceurl },

@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS recipes (
   notes       TEXT,
   steps       TEXT,
   ingredients TEXT,
-  tags        TEXT
+  tags        TEXT,
+  slug        TEXT UNIQUE
 );

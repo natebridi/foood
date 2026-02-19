@@ -1,14 +1,24 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import type { Recipe } from "@/types/recipe";
 import Ingredient from "./Ingredient";
 
 interface Props {
   recipe: Recipe;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export default function IndexCard({ recipe, onClose }: Props) {
+  const router = useRouter();
+  const handleClose = onClose ?? (() => {
+    document.documentElement.dataset.navDirection = "backward";
+    if ("startViewTransition" in document) {
+      (document as any).startViewTransition(() => router.push("/"));
+    } else {
+      router.push("/");
+    }
+  });
   const ingredients = recipe.ingredients?.map((ingredient, i) => (
     <Ingredient ingredient={ingredient} key={i} />
   ));
@@ -47,7 +57,7 @@ export default function IndexCard({ recipe, onClose }: Props) {
   return (
     <div className="card-inner">
       <div className="title">
-        <div className="close" onClick={onClose} />
+        <div className="close" onClick={handleClose} />
         <h1 dangerouslySetInnerHTML={{ __html: recipe.title }} />
       </div>
       <div className="card-content">
