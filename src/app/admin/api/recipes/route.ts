@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/db";
 import { checkAuth } from "@/lib/auth";
-import type { ResultSetHeader } from "mysql2";
 
 export async function POST(req: Request) {
   if (!(await checkAuth())) {
@@ -12,25 +11,29 @@ export async function POST(req: Request) {
   const { action, id, title, steps, tags, ingredients, sourcename, sourceurl, servings, timetotal, timeactive, notes } = body;
 
   if (action === "delete") {
-    await pool.query("DELETE FROM recipes WHERE id = ?", [id]);
+    await pool.query("DELETE FROM recipes WHERE id = $1", [id]);
     return NextResponse.json({ ok: true });
   }
 
-  const fields = { title, steps, tags, ingredients, sourcename, sourceurl, servings, timetotal, timeactive, notes };
+  const fields = [title, steps, tags, ingredients, sourcename, sourceurl, servings, timetotal, timeactive, notes];
 
   if (action === "create") {
-    const [result] = await pool.query<ResultSetHeader>(
+    const { rows } = await pool.query(
       `INSERT INTO recipes (title, steps, tags, ingredients, sourcename, sourceurl, servings, timetotal, timeactive, notes)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [fields.title, fields.steps, fields.tags, fields.ingredients, fields.sourcename, fields.sourceurl, fields.servings, fields.timetotal, fields.timeactive, fields.notes]
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+       RETURNING id`,
+      fields
     );
-    return NextResponse.json({ ok: true, id: result.insertId });
+    return NextResponse.json({ ok: true, id: rows[0].id });
   }
 
   if (action === "update") {
     await pool.query(
-      `UPDATE recipes SET title=?, steps=?, tags=?, ingredients=?, sourcename=?, sourceurl=?, servings=?, timetotal=?, timeactive=?, notes=? WHERE id=?`,
-      [fields.title, fields.steps, fields.tags, fields.ingredients, fields.sourcename, fields.sourceurl, fields.servings, fields.timetotal, fields.timeactive, fields.notes, id]
+      `UPDATE recipes
+       SET title=$1, steps=$2, tags=$3, ingredients=$4, sourcename=$5, sourceurl=$6,
+           servings=$7, timetotal=$8, timeactive=$9, notes=$10
+       WHERE id=$11`,
+      [...fields, id]
     );
     return NextResponse.json({ ok: true, id });
   }

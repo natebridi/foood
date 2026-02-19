@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/db";
-import type { RowDataPacket } from "mysql2";
-import type { RecipeRow, Recipe } from "@/types/recipe";
+import type { Recipe, RecipeRow } from "@/types/recipe";
 
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const [rows] = await pool.query<RowDataPacket[]>(
-    "SELECT * FROM recipes WHERE id = ?",
+  const { rows } = await pool.query(
+    "SELECT * FROM recipes WHERE id = $1",
     [id]
   );
 

@@ -2,19 +2,18 @@ import { redirect } from "next/navigation";
 import pool from "@/lib/db";
 import AdminNav from "@/components/admin/AdminNav";
 import RecipeForm from "@/components/admin/RecipeForm";
-import type { RowDataPacket } from "mysql2";
 import type { RecipeRow, Ingredient } from "@/types/recipe";
 
 async function getRecipes(): Promise<{ id: number; title: string }[]> {
-  const [rows] = await pool.query<RowDataPacket[]>(
+  const { rows } = await pool.query(
     "SELECT id, title FROM recipes ORDER BY title"
   );
   return rows as { id: number; title: string }[];
 }
 
 async function getRecipe(id: string) {
-  const [rows] = await pool.query<RowDataPacket[]>(
-    "SELECT * FROM recipes WHERE id = ?",
+  const { rows } = await pool.query(
+    "SELECT * FROM recipes WHERE id = $1",
     [id]
   );
   if (rows.length === 0) return null;

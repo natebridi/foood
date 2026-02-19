@@ -11,3 +11,4 @@ database/foood-backup-2017-1-1.sql
 node_modules/
 .env.local
 
+.vercel
