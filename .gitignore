@@ -9,6 +9,7 @@ database/foood-backup-2017-1-1.sql
 # Next.js
 .next/
 node_modules/
+.env.development.local
 .env.local
 
 .vercel
