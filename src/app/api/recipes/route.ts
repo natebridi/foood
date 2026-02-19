@@ -3,7 +3,7 @@ import pool from "@/lib/db";
 
 export async function GET() {
   const { rows } = await pool.query(
-    "SELECT id, title FROM recipes ORDER BY title"
+    "SELECT id, title, slug FROM recipes ORDER BY title"
   );
   return NextResponse.json(rows);
 }

@@ -39,6 +39,7 @@ export default async function EditPage({
   let recipeData: {
     id: number;
     title: string;
+    slug: string;
     servings: string;
     timetotal: string;
     timeactive: string;
@@ -58,6 +59,7 @@ export default async function EditPage({
     recipeData = {
       id: row.id,
       title: row.title ?? "",
+      slug: row.slug ?? "",
       servings: row.servings ?? "",
       timetotal: row.timetotal ?? "",
       timeactive: row.timeactive ?? "",
@@ -73,6 +75,7 @@ export default async function EditPage({
     recipeData = {
       id: -1,
       title: "",
+      slug: "",
       servings: "",
       timetotal: "",
       timeactive: "",

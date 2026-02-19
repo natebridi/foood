@@ -252,6 +252,7 @@ ul.menu li.style-7 {
 	background: #eee;
 	color: #444;
 	font: 400 18px/23px 'Vollkorn';
+	min-height: 100vh;
 }
 
 	.card-wrap .title {
@@ -431,3 +432,52 @@ ol.steps {
 			margin: 2em 40px;
 		}
 	}
+
+
+
+
+/*◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇
+	Menu tile links
+◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇*/
+
+ul.menu li {
+	padding: 0;
+}
+
+ul.menu li a {
+	color: inherit;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 1em 0.5em;
+	text-align: center;
+}
+
+
+
+
+/*◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇
+	Page slide transitions (View Transitions API)
+◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇—◇*/
+
+@media (prefers-reduced-motion: no-preference) {
+	html[data-nav-direction="forward"]::view-transition-old(root) {
+		animation: 0.2s ease-in-out both vt-slide-out-left;
+	}
+	html[data-nav-direction="forward"]::view-transition-new(root) {
+		animation: 0.2s ease-in-out both vt-slide-in-right;
+	}
+
+	html[data-nav-direction="backward"]::view-transition-old(root) {
+		animation: 0.2s ease-in-out both vt-slide-out-right;
+	}
+	html[data-nav-direction="backward"]::view-transition-new(root) {
+		animation: 0.2s ease-in-out both vt-slide-in-left;
+	}
+
+	@keyframes vt-slide-out-left  { to   { transform: translateX(-100vw); } }
+	@keyframes vt-slide-in-right  { from { transform: translateX(100vw);  } }
+	@keyframes vt-slide-out-right { to   { transform: translateX(100vw);  } }
+	@keyframes vt-slide-in-left   { from { transform: translateX(-100vw); } }
+}

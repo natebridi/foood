@@ -17,10 +17,12 @@ import IngredientEditor from "./IngredientEditor";
 import ArrayEditor from "./ArrayEditor";
 import type { Ingredient } from "@/types/recipe";
 import Alert from "@mui/material/Alert";
+import { generateSlug } from "@/lib/utils";
 
 interface RecipeData {
   id: number;
   title: string;
+  slug: string;
   servings: string;
   timetotal: string;
   timeactive: string;
@@ -45,7 +47,13 @@ export default function RecipeForm({ recipe, isNew }: Props) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   function setField(field: keyof RecipeData, value: string) {
-    setForm((f) => ({ ...f, [field]: value }));
+    setForm((f) => {
+      const updated = { ...f, [field]: value };
+      if (field === "title" && isNew) {
+        updated.slug = generateSlug(value);
+      }
+      return updated;
+    });
   }
 
   async function handleSave(e: React.FormEvent) {
@@ -60,6 +68,7 @@ export default function RecipeForm({ recipe, isNew }: Props) {
         action: isNew ? "create" : "update",
         id: form.id,
         title: form.title,
+        slug: form.slug,
         servings: form.servings,
         timetotal: form.timetotal,
         timeactive: form.timeactive,
@@ -117,6 +126,15 @@ export default function RecipeForm({ recipe, isNew }: Props) {
             fullWidth
             required
             sx={{ input: { fontSize: "1.5rem", fontWeight: 500 } }}
+          />
+
+          <TextField
+            label="URL slug"
+            value={form.slug}
+            onChange={(e) => setField("slug", e.target.value)}
+            fullWidth
+            helperText="used in the recipe's URL"
+            size="small"
           />
 
           <Stack direction={{xs: "column", sm: "row"}} spacing={2}>
