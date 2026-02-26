@@ -3,12 +3,12 @@ README
 Instructions to get running locally:
 
 1. Server
-cd to foood directory
-php -S localhost:8000
+   cd to foood directory
+   php -S localhost:8000
 
 2. JSX Compile
-cd to foood scripts directory
-babel --presets react --watch src/ --out-dir lib/
+   cd to foood scripts directory
+   babel --presets react --watch src/ --out-dir lib/
 
 3. Database
-mysql
+   mysql

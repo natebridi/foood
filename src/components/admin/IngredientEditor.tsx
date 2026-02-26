@@ -47,9 +47,13 @@ export default function IngredientEditor({ value, onChange }: Props) {
             displayEmpty
             sx={{ minWidth: 130 }}
           >
-            <MenuItem value="-1"><em>—</em></MenuItem>
+            <MenuItem value="-1">
+              <em>—</em>
+            </MenuItem>
             {measures.map((m, i) => (
-              <MenuItem key={i} value={String(i)}>{m.full}</MenuItem>
+              <MenuItem key={i} value={String(i)}>
+                {m.full}
+              </MenuItem>
             ))}
           </Select>
           <TextField

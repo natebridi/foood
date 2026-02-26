@@ -43,10 +43,7 @@ export default function AdminNav({ recipes, selectedId }: Props) {
           ))}
         </Select>
 
-        <Button
-          onClick={handleLogout}
-          sx={{ ml: "auto", color: "text.secondary" }}
-        >
+        <Button onClick={handleLogout} sx={{ ml: "auto", color: "text.secondary" }}>
           Logout
         </Button>
       </Toolbar>

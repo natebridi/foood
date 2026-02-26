@@ -28,7 +28,11 @@ export default function Cookbook() {
     <div className="menu-wrap">
       <ul className="controls">
         <li>
-          <i>F</i><i>o</i><i>o</i><i>o</i><i>d</i>
+          <i>F</i>
+          <i>o</i>
+          <i>o</i>
+          <i>o</i>
+          <i>d</i>
         </li>
         <li className={query !== "" ? "active" : ""}>
           <input
@@ -37,9 +41,7 @@ export default function Cookbook() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          {query && (
-            <div className="clear" onClick={() => setQuery("")} />
-          )}
+          {query && <div className="clear" onClick={() => setQuery("")} />}
         </li>
       </ul>
       <ul className="menu">
