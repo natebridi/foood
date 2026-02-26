@@ -55,10 +55,10 @@ export default function IndexCard({ recipe, onClose }: Props) {
   }
 
   return (
-    <div className="card-inner">
-      <div className="title">
-        <div className="close" onClick={handleClose} />
-        <h1 dangerouslySetInnerHTML={{ __html: recipe.title }} />
+    <div className="recipe-wrap">
+      <div className="recipe-title-bar">
+        <h1 className="recipe-title">{recipe.title}</h1>
+        <button className="recipe-close" onClick={handleClose} aria-label="See all recipes" />
       </div>
       <div className="card-content">
         <ul className="stats">
@@ -66,11 +66,9 @@ export default function IndexCard({ recipe, onClose }: Props) {
           <li><div className="time">{timeTotal}{timeActive}</div></li>
           <li className="source"><em>Source</em> {source}</li>
         </ul>
-        <div className="card-body">
-          <div className="card-left">
-            <ul className="ingredients">{ingredients}</ul>
-          </div>
-          <div className="card-right">
+        <div className="recipe-main">
+          <ul className="recipe-ingredients">{ingredients}</ul>
+          <div className="recipe-body">
             <ol className="steps">{steps}</ol>
             {notes}
           </div>

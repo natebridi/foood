@@ -23,14 +23,10 @@ export default function Ingredient({ ingredient }: Props) {
   }
 
   return (
-    <li>
-      <span
-        className="quantity"
-        dangerouslySetInnerHTML={{ __html: replaceFractions(ingredient.quantity) }}
-      />{" "}
-      {measureEl}{" "}
-      <span className="name">{ingredient.name}</span>
-      <span className="preparation">{ingredient.preparation}</span>
+    <li className="ingredient">
+      <span className="ingredient-quantity">{replaceFractions(ingredient.quantity)}</span>
+      <span className="ingredient-name">{measureEl} {ingredient.name}</span>
+      <span className="ingredient-preparation">{ingredient.preparation}</span>
     </li>
   );
 }
