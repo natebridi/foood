@@ -11,22 +11,19 @@ test.describe("Recipe detail page", () => {
 
   test("homepage tiles link to recipe detail pages", async ({ page }) => {
     await page.goto("/");
-    await page.waitForTimeout(1500);
 
-    // Find the first recipe tile link and click it
-    const firstLink = page
-      .locator("a[href^='/']")
-      .filter({ hasNot: page.locator("a[href='/']") })
-      .first();
-    const href = await firstLink.getAttribute("href");
+    const firstTile = page.getByTestId("recipe-tile").first();
+    const tileCount = await page.getByTestId("recipe-tile").count();
 
-    if (!href || href === "/") {
-      // No recipe tiles found — skip
+    if (tileCount === 0) {
+      // No recipes in DB — skip
       return;
     }
 
-    await firstLink.click();
-    // Should navigate to a recipe detail page
-    await expect(page).toHaveURL(new RegExp(href));
+    const link = firstTile.getByRole("link");
+    const href = await link.getAttribute("href");
+    await link.click();
+
+    await expect(page).toHaveURL(new RegExp(String(href)));
   });
 });

@@ -38,6 +38,7 @@ export default function Cookbook() {
           <input
             type="text"
             placeholder="Search"
+            role="searchbox"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -46,7 +47,7 @@ export default function Cookbook() {
       </ul>
       <ul className="menu">
         {filteredRecipes.map((recipe, i) => (
-          <li key={i} className={recipe.colorStyle}>
+          <li key={i} className={recipe.colorStyle} data-testid="recipe-tile">
             <TransitionLink href={`/${recipe.slug}`}>
               <span dangerouslySetInnerHTML={{ __html: recipe.title }} />
             </TransitionLink>

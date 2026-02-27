@@ -8,20 +8,24 @@ test.describe("Homepage", () => {
 
   test("displays recipe tiles", async ({ page }) => {
     await page.goto("/");
-    // Wait for the recipe tiles to load (they come from client-side fetch)
-    const tiles = page.locator(".recipe-tile, [class*='tile'], article, .card").first();
-    await expect(tiles).toBeVisible({ timeout: 10000 });
+    // Tiles are client-side fetched; wait for at least one to appear
+    await expect(page.getByTestId("recipe-tile").first()).toBeVisible({ timeout: 10000 });
   });
 
   test("search box filters recipe tiles", async ({ page }) => {
     await page.goto("/");
-    // Wait for tiles to load
-    await page.waitForTimeout(1000);
+    await expect(page.getByTestId("recipe-tile").first()).toBeVisible({ timeout: 10000 });
+    const initialCount = await page.getByTestId("recipe-tile").count();
+
     const searchBox = page.getByRole("searchbox");
     await searchBox.fill("zzzzzzz_no_match");
-    // After filtering with a nonsense query, tiles should be hidden/absent
-    // (exact behavior depends on implementation)
-    await expect(searchBox).toHaveValue("zzzzzzz_no_match");
+
+    // Nonsense query should filter out all tiles
+    await expect(page.getByTestId("recipe-tile")).toHaveCount(0);
+
+    // Clearing the search should restore tiles
+    await searchBox.clear();
+    await expect(page.getByTestId("recipe-tile")).toHaveCount(initialCount);
   });
 
   test("visual snapshot of homepage", async ({ page }) => {
