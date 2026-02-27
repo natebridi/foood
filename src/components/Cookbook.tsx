@@ -28,23 +28,26 @@ export default function Cookbook() {
     <div className="menu-wrap">
       <ul className="controls">
         <li>
-          <i>F</i><i>o</i><i>o</i><i>o</i><i>d</i>
+          <i>F</i>
+          <i>o</i>
+          <i>o</i>
+          <i>o</i>
+          <i>d</i>
         </li>
         <li className={query !== "" ? "active" : ""}>
           <input
             type="text"
             placeholder="Search"
+            role="searchbox"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          {query && (
-            <div className="clear" onClick={() => setQuery("")} />
-          )}
+          {query && <div className="clear" onClick={() => setQuery("")} />}
         </li>
       </ul>
       <ul className="menu">
         {filteredRecipes.map((recipe, i) => (
-          <li key={i} className={recipe.colorStyle}>
+          <li key={i} className={recipe.colorStyle} data-testid="recipe-tile">
             <TransitionLink href={`/${recipe.slug}`}>
               <span dangerouslySetInnerHTML={{ __html: recipe.title }} />
             </TransitionLink>

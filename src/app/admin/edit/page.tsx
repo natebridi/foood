@@ -5,17 +5,12 @@ import RecipeForm from "@/components/admin/RecipeForm";
 import type { RecipeRow, Ingredient } from "@/types/recipe";
 
 async function getRecipes(): Promise<{ id: number; title: string }[]> {
-  const { rows } = await pool.query(
-    "SELECT id, title FROM recipes ORDER BY title"
-  );
+  const { rows } = await pool.query("SELECT id, title FROM recipes ORDER BY title");
   return rows as { id: number; title: string }[];
 }
 
 async function getRecipe(id: string) {
-  const { rows } = await pool.query(
-    "SELECT * FROM recipes WHERE id = $1",
-    [id]
-  );
+  const { rows } = await pool.query("SELECT * FROM recipes WHERE id = $1", [id]);
   if (rows.length === 0) return null;
   return rows[0] as RecipeRow;
 }

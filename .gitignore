@@ -11,6 +11,11 @@ database/foood-backup-2017-1-1.sql
 node_modules/
 .env.development.local
 .env.local
+.env.test.local
 
 .vercel
 /database
+
+# Playwright (reports and run artifacts — NOT snapshots, those are committed)
+playwright-report/
+test-results/

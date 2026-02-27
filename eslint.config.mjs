@@ -1,16 +1,19 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import nextConfig from "eslint-config-next";
+import coreWebVitals from "eslint-config-next/core-web-vitals";
+import typescriptConfig from "eslint-config-next/typescript";
+import prettierConfig from "eslint-config-prettier";
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...nextConfig,
+  ...coreWebVitals,
+  ...typescriptConfig,
+  prettierConfig,
+  // Disable Pages-Router-only rules that don't apply to the App Router
+  {
+    rules: {
+      "@next/next/no-page-custom-font": "off",
+    },
+  },
 ];
 
 export default eslintConfig;

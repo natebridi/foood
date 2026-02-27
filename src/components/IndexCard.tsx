@@ -11,14 +11,18 @@ interface Props {
 
 export default function IndexCard({ recipe, onClose }: Props) {
   const router = useRouter();
-  const handleClose = onClose ?? (() => {
-    document.documentElement.dataset.navDirection = "backward";
-    if ("startViewTransition" in document) {
-      (document as any).startViewTransition(() => router.push("/"));
-    } else {
-      router.push("/");
-    }
-  });
+  const handleClose =
+    onClose ??
+    (() => {
+      document.documentElement.dataset.navDirection = "backward";
+      if ("startViewTransition" in document) {
+        (
+          document as Document & { startViewTransition: (fn: () => void) => void }
+        ).startViewTransition(() => router.push("/"));
+      } else {
+        router.push("/");
+      }
+    });
   const ingredients = recipe.ingredients?.map((ingredient, i) => (
     <Ingredient ingredient={ingredient} key={i} />
   ));
@@ -29,12 +33,20 @@ export default function IndexCard({ recipe, onClose }: Props) {
 
   let timeTotal: React.ReactNode = null;
   if (recipe.time?.total) {
-    timeTotal = <div><em>Time</em> {recipe.time.total}</div>;
+    timeTotal = (
+      <div>
+        <em>Time</em> {recipe.time.total}
+      </div>
+    );
   }
 
   let timeActive: React.ReactNode = null;
   if (recipe.time?.active) {
-    timeActive = <div><em>Active</em> {recipe.time.active}</div>;
+    timeActive = (
+      <div>
+        <em>Active</em> {recipe.time.active}
+      </div>
+    );
   }
 
   let source: React.ReactNode = null;
@@ -62,9 +74,18 @@ export default function IndexCard({ recipe, onClose }: Props) {
       </div>
       <div className="card-content">
         <ul className="stats">
-          <li className="servings"><em>Servings</em> {recipe.servings}</li>
-          <li><div className="time">{timeTotal}{timeActive}</div></li>
-          <li className="source"><em>Source</em> {source}</li>
+          <li className="servings">
+            <em>Servings</em> {recipe.servings}
+          </li>
+          <li>
+            <div className="time">
+              {timeTotal}
+              {timeActive}
+            </div>
+          </li>
+          <li className="source">
+            <em>Source</em> {source}
+          </li>
         </ul>
         <div className="recipe-main">
           <ul className="recipe-ingredients">{ingredients}</ul>
