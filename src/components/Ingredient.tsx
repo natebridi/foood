@@ -15,9 +15,7 @@ export default function Ingredient({ ingredient }: Props) {
     const m = measures[ingredient.measure];
     if (m) {
       measureEl = (
-        <span className="measure">
-          {Number(ingredient.quantity) > 1 ? m.plural : m.full}
-        </span>
+        <span className="measure">{Number(ingredient.quantity) > 1 ? m.plural : m.full}</span>
       );
     }
   }
@@ -28,8 +26,7 @@ export default function Ingredient({ ingredient }: Props) {
         className="quantity"
         dangerouslySetInnerHTML={{ __html: replaceFractions(ingredient.quantity) }}
       />{" "}
-      {measureEl}{" "}
-      <span className="name">{ingredient.name}</span>
+      {measureEl} <span className="name">{ingredient.name}</span>
       <span className="preparation">{ingredient.preparation}</span>
     </li>
   );

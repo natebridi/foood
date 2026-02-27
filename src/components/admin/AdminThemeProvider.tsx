@@ -33,11 +33,7 @@ const theme = createTheme({
   },
 });
 
-export default function AdminThemeProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AdminThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

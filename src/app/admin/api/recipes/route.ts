@@ -9,7 +9,21 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json();
-  const { action, id, title, steps, tags, ingredients, sourcename, sourceurl, servings, timetotal, timeactive, notes, slug: rawSlug } = body;
+  const {
+    action,
+    id,
+    title,
+    steps,
+    tags,
+    ingredients,
+    sourcename,
+    sourceurl,
+    servings,
+    timetotal,
+    timeactive,
+    notes,
+    slug: rawSlug,
+  } = body;
 
   if (action === "delete") {
     await pool.query("DELETE FROM recipes WHERE id = $1", [id]);
@@ -17,7 +31,19 @@ export async function POST(req: Request) {
   }
 
   const slug = rawSlug || generateSlug(title);
-  const fields = [title, steps, tags, ingredients, sourcename, sourceurl, servings, timetotal, timeactive, notes, slug];
+  const fields = [
+    title,
+    steps,
+    tags,
+    ingredients,
+    sourcename,
+    sourceurl,
+    servings,
+    timetotal,
+    timeactive,
+    notes,
+    slug,
+  ];
 
   if (action === "create") {
     const { rows } = await pool.query(

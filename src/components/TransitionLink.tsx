@@ -9,14 +9,21 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function TransitionLink({ href, direction = "forward", className, children }: Props) {
+export default function TransitionLink({
+  href,
+  direction = "forward",
+  className,
+  children,
+}: Props) {
   const router = useRouter();
 
   function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
     document.documentElement.dataset.navDirection = direction;
     if ("startViewTransition" in document) {
-      (document as any).startViewTransition(() => router.push(href));
+      (
+        document as Document & { startViewTransition: (fn: () => void) => void }
+      ).startViewTransition(() => router.push(href));
     } else {
       router.push(href);
     }

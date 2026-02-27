@@ -101,7 +101,13 @@ export default function RecipeForm({ recipe, isNew }: Props) {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       {showSuccessMessage && (
-        <Alert icon={<CheckIcon />} variant="filled" severity="success" onClose={() => setShowSuccessMessage(false)} sx={{ mb: 3 }}>
+        <Alert
+          icon={<CheckIcon />}
+          variant="filled"
+          severity="success"
+          onClose={() => setShowSuccessMessage(false)}
+          sx={{ mb: 3 }}
+        >
           Recipe saved successfully
         </Alert>
       )}
@@ -137,7 +143,7 @@ export default function RecipeForm({ recipe, isNew }: Props) {
             size="small"
           />
 
-          <Stack direction={{xs: "column", sm: "row"}} spacing={2}>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
               label="Servings"
               value={form.servings}
@@ -227,12 +233,7 @@ export default function RecipeForm({ recipe, isNew }: Props) {
                 Delete
               </Button>
             )}
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={saving}
-              size="large"
-            >
+            <Button type="submit" variant="contained" disabled={saving} size="large">
               {saving ? "Saving…" : isNew ? "Save new recipe" : "Update recipe"}
             </Button>
           </Stack>
