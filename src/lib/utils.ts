@@ -30,6 +30,6 @@ export function replaceFractions(str: string): string {
       break;
   }
 
-  if (number) return number + " " + fraction;
+  if (number) return number + "" + fraction;
   else return fraction;
 }

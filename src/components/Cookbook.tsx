@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import type { RecipeListItem } from "@/types/recipe";
 import TransitionLink from "./TransitionLink";
+import styles from "@/app/styles/cookbook.module.css";
 
 export default function Cookbook() {
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
@@ -14,7 +15,7 @@ export default function Cookbook() {
       .then((data: { id: number; title: string; slug: string }[]) => {
         const withStyles = data.map((recipe, index) => ({
           ...recipe,
-          colorStyle: `style-${(index % 7) + 1}`,
+          colorStyle: `${styles.recipe} ${styles[`style-${(index % 7) + 1}`]}`,
         }));
         setRecipes(withStyles);
       });
@@ -26,26 +27,28 @@ export default function Cookbook() {
 
   return (
     <div className="menu-wrap">
-      <ul className="controls">
-        <li>
+      <div className={styles.titleBar}>
+        <h1 className={styles.title}>
           <i>F</i>
           <i>o</i>
           <i>o</i>
           <i>o</i>
           <i>d</i>
-        </li>
-        <li className={query !== "" ? "active" : ""}>
+        </h1>
+        <div className={`${styles.searchWrap} ${query !== "" ? "active" : ""}`}>
           <input
             type="text"
-            placeholder="Search"
+            className={styles.search}
             role="searchbox"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          {query && <div className="clear" onClick={() => setQuery("")} />}
-        </li>
-      </ul>
-      <ul className="menu">
+          {query && (
+            <button className="clear" onClick={() => setQuery("")} aria-label="Clear search" />
+          )}
+        </div>
+      </div>
+      <ul className={styles.recipes}>
         {filteredRecipes.map((recipe, i) => (
           <li key={i} className={recipe.colorStyle} data-testid="recipe-tile">
             <TransitionLink href={`/${recipe.slug}`}>

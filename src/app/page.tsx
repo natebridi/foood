@@ -1,5 +1,5 @@
 import Cookbook from "@/components/Cookbook";
-import "./recipes.css";
+import "./styles/global.css";
 
 export default function Home() {
   return <Cookbook />;
