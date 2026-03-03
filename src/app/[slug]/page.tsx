@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import pool from "@/lib/db";
 import IndexCard from "@/components/IndexCard";
 import type { RecipeRow, Recipe } from "@/types/recipe";
-import "./../recipes.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
