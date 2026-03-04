@@ -19,3 +19,4 @@ node_modules/
 # Playwright (reports and run artifacts — NOT snapshots, those are committed)
 playwright-report/
 test-results/
+*.tmp

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import type { Recipe } from "@/types/recipe";
 import Ingredient from "./Ingredient";
 import styles from "@/app/styles/recipe.module.css";
+import { CloseIcon } from "@/components/Images";
 
 interface Props {
   recipe: Recipe;
@@ -72,8 +73,10 @@ export default function IndexCard({ recipe, onClose }: Props) {
   return (
     <div className={styles.recipeWrap}>
       <div className={styles.titleBar}>
-        <h1 className={styles.title}>{recipe.title}</h1>
-        <button className={styles.close} onClick={handleClose} aria-label="See all recipes" />
+        <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: recipe.title }} />
+        <button className={styles.close} onClick={handleClose} aria-label="See all recipes">
+          <CloseIcon className={styles.closeIcon} />
+        </button>
       </div>
       <div className={styles.recipeContent}>
         <ul className={styles.stats}>

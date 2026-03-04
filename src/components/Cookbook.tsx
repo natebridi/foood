@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import type { RecipeListItem } from "@/types/recipe";
 import TransitionLink from "./TransitionLink";
 import styles from "@/app/styles/cookbook.module.css";
+import { SearchIcon, FooodLogo } from "@/components/Images";
 
 export default function Cookbook() {
   const [recipes, setRecipes] = useState<RecipeListItem[]>([]);
@@ -28,13 +29,10 @@ export default function Cookbook() {
   return (
     <div className="menu-wrap">
       <div className={styles.titleBar}>
-        <h1 className={styles.title}>
-          <i>F</i>
-          <i>o</i>
-          <i>o</i>
-          <i>o</i>
-          <i>d</i>
+        <h1 className={styles.logoWrap}>
+          <FooodLogo className={styles.logo} />
         </h1>
+        <SearchIcon className={styles.searchIcon} />
         <div className={`${styles.searchWrap} ${query !== "" ? "active" : ""}`}>
           <input
             type="text"
