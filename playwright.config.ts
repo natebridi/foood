@@ -27,5 +27,5 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },
-  snapshotPathTemplate: "{testDir}/__snapshots__/{testFilePath}/{projectName}/{arg}{ext}",
+  snapshotPathTemplate: `{testDir}/__snapshots__/{testFilePath}/{projectName}/${process.platform}/{arg}{ext}`,
 });

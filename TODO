@@ -1,0 +1,7 @@
+TODO
+
+- Add ability to sort recipes: by date added, by name
+- Add category tags to recipes and allow filtering by category
+- Make header persistent between home and recipe page, add "home" link to header, and only show search on home page
+- Add toggle for light/dark mode
+- Add toggle for "keep screen on" to recipe pages when cooking

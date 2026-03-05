@@ -1,0 +1,96 @@
+:root {
+  --font-body: "Vollkorn", serif;
+  --font-title: "Playfair Display", serif;
+  --font-accent: "Trispace", sans-serif;
+
+  /* Primitive colors */
+  --clr-mint: oklch(0.857 0.068 158);
+  --clr-mint-dk: oklch(0.837 0.068 158);
+  --clr-steel: oklch(0.601 0.06 212);
+  --clr-steel-dk: oklch(0.581 0.06 212);
+  --clr-gray: oklch(0.4 0.008 64);
+  --clr-gray-dk: oklch(0.38 0.008 64);
+  --clr-orange: oklch(0.62 0.148 48);
+  --clr-orange-dk: oklch(0.6 0.148 48);
+  --clr-red: oklch(0.62 0.147 46);
+  --clr-red-dk: oklch(0.6 0.147 46);
+  --clr-oxblood: oklch(0.399 0.146 19);
+  --clr-oxblood-dk: oklch(0.379 0.146 19);
+  --clr-brick: oklch(0.49 0.165 17);
+  --clr-brick-dk: oklch(0.47 0.165 17);
+  --clr-green: oklch(0.69 0.075 140);
+  --clr-green-dk: oklch(0.67 0.075 140);
+  --clr-wheat: oklch(0.88 0.085 115);
+  --clr-wheat-dk: oklch(0.86 0.085 115);
+  --clr-tan: oklch(0.9 0.022 84);
+  --clr-tan-dk: oklch(0.88 0.022 84);
+  --clr-army: oklch(0.69 0.075 140);
+  --clr-army-dk: oklch(0.67 0.075 140);
+  --clr-canary: oklch(0.95 0.175 105);
+  --clr-canary-dk: oklch(0.93 0.175 105);
+  --clr-coolgray: oklch(0.89 0.016 155);
+  --clr-coolgray-dk: oklch(0.87 0.016 155);
+  --clr-tuna: oklch(0.59 0.162 13);
+  --clr-tuna-dk: oklch(0.57 0.162 13);
+
+  --body: var(--clr-gray);
+  --secondary: var(--clr-green);
+  --divider: var(--clr-coolgray);
+  --bg: oklch(0.96 0.0009 84);
+
+  /* Derived color styles for recipe tiles */
+  --style1-bg: var(--clr-mint);
+  --style1-fg: var(--clr-steel);
+  --style1-bg-hover: var(--clr-mint-dk);
+  --style1-fg-hover: var(--clr-steel-dk);
+  --style2-bg: var(--clr-gray);
+  --style2-fg: var(--clr-orange);
+  --style2-bg-hover: var(--clr-gray-dk);
+  --style2-fg-hover: var(--clr-orange-dk);
+  --style3-bg: var(--clr-red);
+  --style3-fg: var(--clr-oxblood);
+  --style3-bg-hover: var(--clr-red-dk);
+  --style3-fg-hover: var(--clr-oxblood-dk);
+  --style4-bg: var(--clr-green);
+  --style4-fg: var(--clr-wheat);
+  --style4-bg-hover: var(--clr-green-dk);
+  --style4-fg-hover: var(--clr-wheat-dk);
+  --style5-bg: var(--clr-tan);
+  --style5-fg: var(--clr-army);
+  --style5-bg-hover: var(--clr-tan-dk);
+  --style5-fg-hover: var(--clr-army-dk);
+  --style6-bg: var(--clr-brick);
+  --style6-fg: var(--clr-canary);
+  --style6-bg-hover: var(--clr-brick-dk);
+  --style6-fg-hover: var(--clr-canary-dk);
+  --style7-bg: var(--clr-coolgray);
+  --style7-fg: var(--clr-tuna);
+  --style7-bg-hover: var(--clr-coolgray-dk);
+  --style7-fg-hover: var(--clr-tuna-dk);
+}
+
+/*◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>
+	Resets
+◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  overflow-x: hidden;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #2e9adf;
+}

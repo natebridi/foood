@@ -14,19 +14,22 @@ export function replaceFractions(str: string): string {
 
   switch (remainder) {
     case 0.5:
-      fraction = "&frac12;";
+      fraction = "\u00bd";
       break;
     case 0.25:
-      fraction = "&frac14;";
+      fraction = "\u00bc";
       break;
     case 0.75:
-      fraction = "&frac34;";
+      fraction = "\u00be";
       break;
     case 0.33:
-      fraction = "&frac13;";
+      fraction = "\u2153";
+      break;
+    case 0.67:
+      fraction = "\u2154";
       break;
   }
 
-  if (number) return number + " " + fraction;
+  if (number) return number + "" + fraction;
   else return fraction;
 }

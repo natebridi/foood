@@ -3,6 +3,7 @@
 import type { Ingredient as IngredientType } from "@/types/recipe";
 import { measures } from "@/lib/definitions";
 import { replaceFractions } from "@/lib/utils";
+import styles from "@/app/styles/ingredient.module.css";
 
 interface Props {
   ingredient: IngredientType;
@@ -14,20 +15,17 @@ export default function Ingredient({ ingredient }: Props) {
   if (ingredient.measure !== undefined && ingredient.measure !== null && ingredient.measure >= 0) {
     const m = measures[ingredient.measure];
     if (m) {
-      measureEl = (
-        <span className="measure">{Number(ingredient.quantity) > 1 ? m.plural : m.full}</span>
-      );
+      measureEl = Number(ingredient.quantity) > 1 ? m.plural : m.full;
     }
   }
 
   return (
-    <li>
-      <span
-        className="quantity"
-        dangerouslySetInnerHTML={{ __html: replaceFractions(ingredient.quantity) }}
-      />{" "}
-      {measureEl} <span className="name">{ingredient.name}</span>
-      <span className="preparation">{ingredient.preparation}</span>
+    <li className={styles.ingredient}>
+      <span className={styles.ingredientQuantity}>{replaceFractions(ingredient.quantity)}</span>
+      <span className={styles.ingredientName}>
+        {measureEl} {ingredient.name}
+      </span>
+      <span className={styles.ingredientPreparation}>{ingredient.preparation}</span>
     </li>
   );
 }

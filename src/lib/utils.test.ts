@@ -32,31 +32,35 @@ describe("generateSlug", () => {
 });
 
 describe("replaceFractions", () => {
-  it("converts 0.5 to ½ HTML entity", () => {
-    expect(replaceFractions("0.5")).toBe("&frac12;");
+  it("converts 0.5 to ½", () => {
+    expect(replaceFractions("0.5")).toBe("½");
   });
 
-  it("converts 0.25 to ¼ HTML entity", () => {
-    expect(replaceFractions("0.25")).toBe("&frac14;");
+  it("converts 0.25 to ¼", () => {
+    expect(replaceFractions("0.25")).toBe("¼");
   });
 
-  it("converts 0.75 to ¾ HTML entity", () => {
-    expect(replaceFractions("0.75")).toBe("&frac34;");
+  it("converts 0.75 to ¾", () => {
+    expect(replaceFractions("0.75")).toBe("¾");
   });
 
-  it("converts 0.33 to ⅓ HTML entity", () => {
-    expect(replaceFractions("0.33")).toBe("&frac13;");
+  it("converts 0.33 to ⅓", () => {
+    expect(replaceFractions("0.33")).toBe("⅓");
+  });
+
+  it("converts 0.67 to ⅔", () => {
+    expect(replaceFractions("0.67")).toBe("⅔");
   });
 
   it("returns a whole number as a string with no fraction", () => {
-    expect(replaceFractions("2")).toBe("2 ");
+    expect(replaceFractions("2")).toBe("2");
   });
 
   it("combines whole number and fraction for mixed values", () => {
-    expect(replaceFractions("1.5")).toBe("1 &frac12;");
+    expect(replaceFractions("1.5")).toBe("1½");
   });
 
-  it("returns empty fraction entity for just a fraction part", () => {
+  it("returns only the fraction character for values less than 1", () => {
     expect(replaceFractions("0.5")).not.toContain("0");
   });
 });

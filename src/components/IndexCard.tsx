@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import type { Recipe } from "@/types/recipe";
 import Ingredient from "./Ingredient";
+import styles from "@/app/styles/recipe.module.css";
+import { CloseIcon } from "@/components/Images";
 
 interface Props {
   recipe: Recipe;
@@ -28,14 +30,15 @@ export default function IndexCard({ recipe, onClose }: Props) {
   ));
 
   const steps = recipe.steps?.map((step, i) => (
-    <li key={i} dangerouslySetInnerHTML={{ __html: step }} />
+    <li className={styles.step} key={i} dangerouslySetInnerHTML={{ __html: step }} />
   ));
 
   let timeTotal: React.ReactNode = null;
   if (recipe.time?.total) {
     timeTotal = (
       <div>
-        <em>Time</em> {recipe.time.total}
+        <span className={styles.statLabel}>Time</span>
+        <span className={styles.statValue}>{recipe.time.total}</span>
       </div>
     );
   }
@@ -43,8 +46,9 @@ export default function IndexCard({ recipe, onClose }: Props) {
   let timeActive: React.ReactNode = null;
   if (recipe.time?.active) {
     timeActive = (
-      <div>
-        <em>Active</em> {recipe.time.active}
+      <div className={styles.addLeftMargin}>
+        <span className={styles.statLabel}>Active</span>
+        <span className={styles.statValue}>{recipe.time.active}</span>
       </div>
     );
   }
@@ -59,40 +63,40 @@ export default function IndexCard({ recipe, onClose }: Props) {
   let notes: React.ReactNode = null;
   if (recipe.notes) {
     notes = (
-      <div className="notes">
-        <h4>Notes</h4>
-        <p dangerouslySetInnerHTML={{ __html: recipe.notes }} />
+      <div className={styles.notes}>
+        <h3 className={styles.notesTitle}>Notes</h3>
+        <p className={styles.notesContent} dangerouslySetInnerHTML={{ __html: recipe.notes }} />
       </div>
     );
   }
 
   return (
-    <div className="card-inner">
-      <div className="title">
-        <div className="close" onClick={handleClose} />
-        <h1 dangerouslySetInnerHTML={{ __html: recipe.title }} />
+    <div className={styles.recipeWrap}>
+      <div className={styles.titleBar}>
+        <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: recipe.title }} />
+        <button className={styles.close} onClick={handleClose} aria-label="See all recipes">
+          <CloseIcon className={styles.closeIcon} />
+        </button>
       </div>
-      <div className="card-content">
-        <ul className="stats">
-          <li className="servings">
-            <em>Servings</em> {recipe.servings}
+      <div className={styles.recipeContent}>
+        <ul className={styles.stats}>
+          <li className={styles.stat}>
+            <span className={styles.statLabel}>Servings</span>
+            <span className={styles.statValue}>{recipe.servings}</span>
           </li>
-          <li>
-            <div className="time">
-              {timeTotal}
-              {timeActive}
-            </div>
+          <li className={styles.stat}>
+            {timeTotal}
+            {timeActive}
           </li>
-          <li className="source">
-            <em>Source</em> {source}
+          <li className={styles.stat}>
+            <span className={styles.statLabel}>Source</span>
+            <span className={styles.statValue}>{source}</span>
           </li>
         </ul>
-        <div className="card-body">
-          <div className="card-left">
-            <ul className="ingredients">{ingredients}</ul>
-          </div>
-          <div className="card-right">
-            <ol className="steps">{steps}</ol>
+        <div className={styles.recipeMain}>
+          <ul className={styles.recipeIngredients}>{ingredients}</ul>
+          <div className={styles.recipeBody}>
+            <ol className={styles.steps}>{steps}</ol>
             {notes}
           </div>
         </div>

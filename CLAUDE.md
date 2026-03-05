@@ -109,13 +109,14 @@ Single table: `recipes`. Columns: `id`, `title`, `slug`, `servings`, `timetotal`
 
 - Unit tests live next to the source file they test (`*.test.ts` / `*.test.tsx`).
 - E2E tests live in `src/test/e2e/`.
-- Visual snapshots are committed to `src/test/e2e/__snapshots__/`. Update them with `npm run test:e2e:update` after intentional UI changes.
+- Visual snapshots are committed to `src/test/e2e/__snapshots__/` and are **platform-specific** — macOS baselines live under `darwin/`, Linux (CI) baselines under `linux/`.
+- Update macOS baselines locally with `npm run test:e2e:update`. Update Linux (CI) baselines by triggering the **"Update Visual Snapshots"** workflow in GitHub Actions (`Actions → Update Visual Snapshots → Run workflow`).
 - Mock `@/lib/db` in unit tests — never hit a real database from unit tests.
 
 ## Agent Workflow Notes
 
 - After making changes, run `npm test` to verify nothing regressed.
-- After any UI change, run `npm run test:e2e` and check if snapshots need updating.
+- After any UI change, run `npm run test:e2e` and check if snapshots need updating. Visual snapshots are platform-specific (macOS: `darwin/`, Linux CI: `linux/`). Update macOS baselines with `npm run test:e2e:update`; update CI baselines via the "Update Visual Snapshots" GitHub Actions workflow.
 - The `measures[]` array in `src/lib/definitions.ts` is the source of truth for ingredient units. Index 0 = cup. Index -1 means "no unit".
 - JSON columns (`ingredients`, `steps`, `tags`): the raw DB value is a JSON string. Always parse on read, stringify on write.
 - Slugs must be unique. Use `generateSlug(title)` from `src/lib/utils.ts` when creating or renaming recipes.
