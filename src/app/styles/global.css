@@ -37,6 +37,7 @@
   --secondary: var(--clr-green);
   --divider: var(--clr-coolgray);
   --bg: oklch(0.96 0.0009 84);
+  --surface: #fff;
 
   /* Derived color styles for recipe tiles */
   --style1-bg: var(--clr-mint);
@@ -67,6 +68,13 @@
   --style7-fg: var(--clr-tuna);
   --style7-bg-hover: var(--clr-coolgray-dk);
   --style7-fg-hover: var(--clr-tuna-dk);
+}
+
+[data-theme="dark"] {
+  --bg: oklch(0.15 0.005 84);
+  --body: oklch(0.85 0.008 64);
+  --divider: oklch(0.25 0.016 155);
+  --surface: oklch(0.2 0 0);
 }
 
 /*◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>◊<>

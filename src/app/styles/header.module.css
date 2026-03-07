@@ -1,0 +1,70 @@
+:root {
+  --logo-wdth: 6rem;
+}
+
+@media (min-width: 600px) {
+  :root {
+    --logo-wdth: 8rem;
+  }
+}
+
+.siteHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem 0.5rem;
+  width: 100%;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  width: var(--logo-wdth);
+}
+
+.logo {
+  width: var(--logo-wdth);
+  height: auto;
+  color: var(--body);
+
+  & path:nth-child(1) {
+    fill: var(--clr-steel);
+  }
+  & path:nth-child(2) {
+    fill: var(--clr-red);
+  }
+  & path:nth-child(3) {
+    fill: var(--clr-oxblood);
+  }
+  & path:nth-child(5) {
+    fill: var(--clr-army);
+  }
+}
+
+.darkToggle {
+  background: none;
+  border: 1px solid var(--divider);
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary);
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: var(--surface);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: -2px;
+  }
+}
+
+.toggleIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}

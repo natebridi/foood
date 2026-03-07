@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import pool from "@/lib/db";
 import IndexCard from "@/components/IndexCard";
+import SiteHeader from "@/components/SiteHeader";
 import type { RecipeRow, Recipe } from "@/types/recipe";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -31,6 +32,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
 
   return (
     <div className="card-wrap">
+      <SiteHeader />
       <IndexCard recipe={recipe} />
     </div>
   );

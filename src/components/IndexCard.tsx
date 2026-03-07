@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import type { Recipe } from "@/types/recipe";
 import Ingredient from "./Ingredient";
@@ -13,6 +14,36 @@ interface Props {
 
 export default function IndexCard({ recipe, onClose }: Props) {
   const router = useRouter();
+  const wakeLockRef = useRef<WakeLockSentinel | null>(null);
+  const [wakeLockActive, setWakeLockActive] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      wakeLockRef.current?.release();
+    };
+  }, []);
+
+  async function toggleWakeLock() {
+    if (wakeLockActive) {
+      await wakeLockRef.current?.release();
+      wakeLockRef.current = null;
+      setWakeLockActive(false);
+      return;
+    }
+    if (!("wakeLock" in navigator)) return;
+    try {
+      const sentinel = await navigator.wakeLock.request("screen");
+      sentinel.addEventListener("release", () => {
+        setWakeLockActive(false);
+        wakeLockRef.current = null;
+      });
+      wakeLockRef.current = sentinel;
+      setWakeLockActive(true);
+    } catch {
+      // Permission denied or API unavailable
+    }
+  }
+
   const handleClose =
     onClose ??
     (() => {
@@ -74,9 +105,19 @@ export default function IndexCard({ recipe, onClose }: Props) {
     <div className={styles.recipeWrap}>
       <div className={styles.titleBar}>
         <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: recipe.title }} />
-        <button className={styles.close} onClick={handleClose} aria-label="See all recipes">
-          <CloseIcon className={styles.closeIcon} />
-        </button>
+        <div className={styles.titleActions}>
+          <button
+            className={`${styles.wakeLock} ${wakeLockActive ? styles.wakeLockActive : ""}`}
+            onClick={toggleWakeLock}
+            aria-label={wakeLockActive ? "Release screen wake lock" : "Keep screen on"}
+            type="button"
+          >
+            {wakeLockActive ? "Screen on" : "Keep on"}
+          </button>
+          <button className={styles.close} onClick={handleClose} aria-label="See all recipes">
+            <CloseIcon className={styles.closeIcon} />
+          </button>
+        </div>
       </div>
       <div className={styles.recipeContent}>
         <ul className={styles.stats}>

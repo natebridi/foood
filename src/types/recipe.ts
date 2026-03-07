@@ -15,6 +15,7 @@ export interface RecipeListItem {
   id: number;
   title: string;
   slug: string;
+  tags: string[];
   colorStyle: string;
 }
 

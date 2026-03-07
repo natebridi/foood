@@ -15,6 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Trispace:wdth,wght@75..125,100..800&family=Playfair+Display:wght@700&family=Vollkorn:ital,wght@0,400;0,700;1,400;1,700&display=swap"
           rel="stylesheet"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.dataset.theme='dark';})()`,
+          }}
+        />
       </head>
       <body style={{ scrollBehavior: "smooth" }}>{children}</body>
     </html>
