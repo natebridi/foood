@@ -15,6 +15,8 @@ test.describe("Homepage", () => {
   test("search box filters recipe tiles", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByTestId("recipe-tile").first()).toBeVisible({ timeout: 10000 });
+    // Wait for the reveal animation to finish so the tile count is stable.
+    await expect(page.getByRole("list")).toHaveAttribute("aria-busy", "false");
     const initialCount = await page.getByTestId("recipe-tile").count();
 
     const searchBox = page.getByRole("searchbox");

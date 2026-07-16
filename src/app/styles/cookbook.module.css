@@ -262,7 +262,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em 0.5em;
+  min-height: 4rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.1s ease-in-out;
@@ -270,7 +270,9 @@
 
   a {
     color: inherit;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-optical-sizing: auto;
     font-style: normal;
     font: 500 1rem/1.2 var(--font-accent);
@@ -279,6 +281,8 @@
     padding: 1rem;
     text-align: center;
     width: 100%;
+    min-height: 4rem;
+    box-sizing: border-box;
     text-wrap: balance;
 
     &:focus-visible {
@@ -363,4 +367,42 @@
     background-color: var(--style7-bg-hover);
     color: var(--style7-fg-hover);
   }
+}
+
+.skeleton {
+  cursor: default;
+  pointer-events: none;
+
+  &:hover,
+  &:focus-within {
+    transform: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+.skeletonText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  width: 100%;
+  min-height: 4rem;
+  box-sizing: border-box;
+  padding: 1rem;
+  opacity: 0.55;
+}
+
+.skeletonWord {
+  display: flex;
+  align-items: center;
+  gap: 0.1em;
+}
+
+.blockGlyph {
+  display: block;
+  height: 0.85em;
+  width: 0.425em;
+  flex-shrink: 0;
 }

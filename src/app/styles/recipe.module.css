@@ -67,9 +67,6 @@
   border: none;
   width: 60px;
   height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: 50%;
   position: relative;
   background-color: transparent;
@@ -83,6 +80,16 @@
   &:focus-visible {
     outline: 2px solid #333;
   }
+}
+
+.closeIcon {
+  /* Centered via absolute positioning rather than flexbox: Safari collapses a
+     replaced SVG child to zero size inside a flex container. */
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
 /*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*·.•.·*
