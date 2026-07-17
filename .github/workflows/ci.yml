@@ -48,7 +48,7 @@ jobs:
         run: npm test
 
   e2e:
-    name: E2E & Visual Tests
+    name: E2E Tests
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}

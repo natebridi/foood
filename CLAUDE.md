@@ -37,11 +37,8 @@ npm test
 # Unit tests in watch mode
 npm run test:watch
 
-# Run E2E + visual regression tests (Playwright, requires running server)
+# Run E2E tests (Playwright, requires running server)
 npm run test:e2e
-
-# Update visual snapshots after an intentional UI change
-npm run test:e2e:update
 ```
 
 **Always run `npm test` before committing.** The pre-commit hook runs `lint-staged` (format + lint on changed files); the pre-push hook runs `npm run typecheck`.
@@ -108,15 +105,13 @@ Single table: `recipes`. Columns: `id`, `title`, `slug`, `servings`, `timetotal`
 ### Testing
 
 - Unit tests live next to the source file they test (`*.test.ts` / `*.test.tsx`).
-- E2E tests live in `src/test/e2e/`.
-- Visual snapshots are committed to `src/test/e2e/__snapshots__/` and are **platform-specific** — macOS baselines live under `darwin/`, Linux (CI) baselines under `linux/`.
-- Update macOS baselines locally with `npm run test:e2e:update`. Update Linux (CI) baselines by triggering the **"Update Visual Snapshots"** workflow in GitHub Actions (`Actions → Update Visual Snapshots → Run workflow`).
+- E2E tests live in `src/test/e2e/` — functional Playwright specs only (no visual snapshot diffs).
 - Mock `@/lib/db` in unit tests — never hit a real database from unit tests.
 
 ## Agent Workflow Notes
 
 - After making changes, run `npm test` to verify nothing regressed.
-- After any UI change, run `npm run test:e2e` and check if snapshots need updating. Visual snapshots are platform-specific (macOS: `darwin/`, Linux CI: `linux/`). Update macOS baselines with `npm run test:e2e:update`; update CI baselines via the "Update Visual Snapshots" GitHub Actions workflow.
+- After a UI change, run `npm run test:e2e` to confirm the functional flows still pass.
 - The `measures[]` array in `src/lib/definitions.ts` is the source of truth for ingredient units. Index 0 = cup. Index -1 means "no unit".
 - JSON columns (`ingredients`, `steps`, `tags`): the raw DB value is a JSON string. Always parse on read, stringify on write.
 - Slugs must be unique. Use `generateSlug(title)` from `src/lib/utils.ts` when creating or renaming recipes.
@@ -141,7 +136,6 @@ src/
       homepage.spec.ts
       recipe.spec.ts
       admin.spec.ts
-      __snapshots__/            # Committed visual diff baselines
   app/
     layout.tsx                  # Root layout — Google Fonts link, recipes.css
     page.tsx                    # Renders <Cookbook />

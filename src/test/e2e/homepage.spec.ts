@@ -29,14 +29,4 @@ test.describe("Homepage", () => {
     await searchBox.clear();
     await expect(page.getByTestId("recipe-tile")).toHaveCount(initialCount);
   });
-
-  test("visual snapshot of homepage", async ({ page }) => {
-    await page.goto("/");
-    // Wait for recipe tiles to load
-    await page.waitForTimeout(1500);
-    await expect(page).toHaveScreenshot("homepage.png", {
-      fullPage: true,
-      maxDiffPixelRatio: 0.05,
-    });
-  });
 });

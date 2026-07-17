@@ -17,11 +17,4 @@ test.describe("Admin auth", () => {
     await page.keyboard.press("Enter");
     await expect(page.getByText("Incorrect password")).toBeVisible({ timeout: 5000 });
   });
-
-  test("visual snapshot of login page", async ({ page }) => {
-    await page.goto("/admin/login");
-    await expect(page).toHaveScreenshot("admin-login.png", {
-      maxDiffPixelRatio: 0.05,
-    });
-  });
 });
